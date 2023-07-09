@@ -37,7 +37,9 @@ PDFLATEX_ENV = TEXINPUTS=.:$(shell pwd):$(shell pwd)/common: texfot
 PDFLATEX_OPT = -shell-escape -file-line-error -halt-on-error
 
 # The common slide stylesheet
-STYLESHEET = common/beamerthemeBootlin.sty
+# hjroh
+STYLESHEET = common/beamerthemeDNSLab.sty
+TRAINER=heejun-roh
 
 #
 # === Picture lookup ===
@@ -88,7 +90,7 @@ ifdef SLIDES
 # PDF file that was requested.
 ifeq ($(firstword $(subst -, , $(SLIDES))),full)
 SLIDES_TRAINING      = $(strip $(subst -slides, , $(subst full-, , $(SLIDES))))
-SLIDES_COMMON_BEFORE = common/slide-header.tex \
+SLIDES_COMMON_BEFORE = common/slide-header-DNSLab.tex \
 		       common/$(SLIDES_TRAINING)-title.tex
 SLIDES_CHAPTERS      = $($(call UPPERCASE, $(subst  -,_, $(SLIDES_TRAINING)))_SLIDES)
 SLIDES_COMMON_AFTER  = common/slide-footer.tex
