@@ -7,17 +7,27 @@
 \usepackage{fancyvrb,xcolor}
 \setlength{\TPHorizModule}{\paperwidth}
 \setlength{\TPVertModule}{\paperheight}
-
+\usepackage{array}
 
 \usetheme{default}
 \useinnertheme{default}
 \useoutertheme{default}
-\usecolortheme{seahorse}
+\usecolortheme{beaver}
 
 \usepackage{fontspec}
-\setmainfont{Latin Modern Roman}
-\setsansfont{Latin Modern Sans}
-\setmonofont{Inconsolata}
+%\setmainfont{Latin Modern Roman}
+%\setsansfont{Latin Modern Sans}
+%\setmonofont{Inconsolata}
+
+\usepackage{xeCJK}
+\setmainfont{Noto Serif}
+\setsansfont{Noto Sans}
+\setmonofont{Noto Sans Mono}
+\setCJKmainfont{Noto Serif CJK KR}
+\setCJKsansfont{Noto Sans CJK KR}
+\setCJKmonofont{Noto Sans Mono CJK KR}
+
+\definecolor{crimsonKU}{RGB}{134,38,51} % PANTONE 202 C
 
 \setbeamercolor*{palette primary}{bg=white}
 \definecolor{blorange}{rgb}{0.96,0.5,0.1}
@@ -47,6 +57,10 @@
 \setbeamercolor{enumerate item}{fg=blorange}
 \setbeamercolor{enumerate subitem}{fg=blorange}
 \setbeamercolor{enumerate subsubitem}{fg=blorange}
+
+\setbeamerfont{itemize/enumerate body}{family=\sffamily, size={\fontsize{10}{10}}}
+\setbeamerfont{itemize/enumerate subbody}{family=\sffamily, size={\fontsize{8}{8}}}
+
 
 % Custom Bootlin commands
 \newcommand{\codecolor}{\usebeamercolor[fg]{code}}
@@ -88,8 +102,8 @@
   \hbox{%
     \begin{beamercolorbox}[wd=\paperwidth,ht=3ex,dp=1.5ex]{frametitle}%
       \usebeamerfont{frametitle}
-      \begin{textblock}{.2}[0.5,0.5](0.12,0.07)
-       \includegraphics[width=1cm]{common/logo-koreauniv-symbol.pdf}
+      \begin{textblock}{.2}[0.5,0.5](0.12,0.08)
+       \includegraphics[width=0.8cm]{common/logo-koreauniv-symbol.pdf}
       \end{textblock}
       \hspace{1.25cm}
       \insertframetitle
@@ -102,16 +116,12 @@
 % Footer
 \defbeamertemplate*{footline}{DNSLabtheme}
 {
-  \hbox{\color{black}\vrule width \paperwidth height 0.1pt}
+  \hbox{\color{crimsonKU}\vrule width \paperwidth height 0.1pt \vspace{0.1cm}}
   \hbox{%
     \begin{beamercolorbox}[wd=\paperwidth,ht=2.25ex,dp=1ex,leftskip=0.5em]{palette primary}%
-      \Tiny
-      \begin{tabular*}{\textwidth}[t]{@{\extracolsep{\fill}} lr}
-        \includegraphics[width=0.07\textwidth]{common/koreauniv-logo.pdf}
-        Defensible Networked Systems Laboratory (DNSLab), Korea University Sejong Campus
-        ~{\tt https://dnslab.korea.ac.kr} & \insertframenumber{}/\inserttotalframenumber{}
-        \hfill
-        \\~&~
+      \begin{tabular*}{\textwidth}[t]{@{\extracolsep{\fill}} llr}
+        \includegraphics[width=0.07\textwidth]{common/koreauniv-logo.pdf} & 
+        Defensible Networked Systems Laboratory (DNSLab) ~{\tt https://dnslab.korea.ac.kr} & \insertframenumber{}/\inserttotalframenumber{}
       \end{tabular*}
     \end{beamercolorbox}
   }
@@ -122,11 +132,11 @@
 
 \newcommand\titleframe
 {
-  \begin{frame}{\trainingtitle{} Lecture Notes}
+  \begin{frame}{DNSLab Lecture Notes Series}
     \begin{columns}[b]
       \column{0.7\textwidth}
       \Large
-      \trainingtitle{} Lecture Notes\\
+      \trainingtitle{}\\
       \vspace{3em}
       \scriptsize
       Latest update: \lastupdateen{}.\\
@@ -134,10 +144,10 @@
       Document updates and training details for the original slides: \url{https://www.bootlin.com}\\
       \vspace{1em}
       Corrections, suggestions, contributions and translations are welcome!\\
-      Send them to \href{mailto:hjroh@korea.ac.kr}{hjroh@korea.ac.kr}
+      Send them to \href{mailto:hjroh@korea.ac.kr}{hjroh@korea.ac.kr}\\
       \vspace{1em}
       © Copyright 2004-\the\year, Bootlin. Creative Commons BY-SA 3.0 license.\\
-      © Copyright 2023-\the\year, Heejun Roh.\\
+      © Copyright 2023-\the\year, Heejun Roh (노희준).\\
       \column{0.3\textwidth}
       \begin{center}
         \includegraphics[height=4cm]{common/koreauniv-logo-square.pdf}
