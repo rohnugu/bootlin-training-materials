@@ -14,5 +14,5 @@ Lecturer: Heejun Roh, Ph.D.
  - TRAINER는 make에서 전달하는 인자로 덮어쓰기가 가능하지만, STYLESHEET는 Makefile에서 전달을 무시하고 정의하고 있기 때문에 Makefile의 수정은 필수임. `STYLESHEET = common/beamerthemebootlin.sty`를 `STYLESHEET = common/beamerthemeDNSLab.sty`로 변경해야 함
 
 ```
-make TRAINER=heejun-roh system-programming.mk
+make TRAINER=heejun-roh full-system-programming-slides.pdf
 ```

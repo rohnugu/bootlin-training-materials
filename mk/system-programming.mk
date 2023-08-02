@@ -1,5 +1,5 @@
 SYSTEM_PROGRAMMING_SLIDES = \
-		first-slides \
+		first-slides-dnslab \
 		about-us \
 		course-information-title \
 		discovery-board-dk1 \

@@ -39,7 +39,7 @@ PDFLATEX_OPT = -shell-escape -file-line-error -halt-on-error
 # The common slide stylesheet
 # hjroh
 STYLESHEET = common/beamerthemeDNSLab.sty
-TRAINER=heejun-roh
+#TRAINER = heejun-roh
 
 #
 # === Picture lookup ===
