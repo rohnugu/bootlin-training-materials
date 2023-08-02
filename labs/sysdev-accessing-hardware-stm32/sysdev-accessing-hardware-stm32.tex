@@ -446,9 +446,10 @@ headset provided by your instructor.
 Before plugging the device, look at the output of \code{lsusb}:
 
 \begin{bashinput}
-# lsus
+# lsusb
+Bus 002 Device 002: ID 0424:2514
 Bus 001 Device 001: ID 1d6b:0002
-Bus 001 Device 002: ID 0424:2514
+Bus 002 Device 001: ID 1d6b:0002
 \end{bashinput}
 
 Now, when you plug the USB headset, a number of messages should appear
@@ -457,9 +458,10 @@ additional device:
 
 \begin{bashinput}
 # lsusb
+Bus 002 Device 004: ID 0d8c:0014
+Bus 002 Device 002: ID 0424:2514
 Bus 001 Device 001: ID 1d6b:0002
-Bus 001 Device 003: ID 0d8c:0014
-Bus 001 Device 002: ID 0424:2514
+Bus 002 Device 001: ID 1d6b:0002
 \end{bashinput}
 
 The device of vendor ID \code{0d8c} and product ID \code{0014} has
@@ -515,9 +517,9 @@ root filesystem (\code{$HOME/__SESSION_NAME__-labs/tinysystem/nfsroot}).
 
 Also make sure to update the kernel image (\code{make zImage}), and reboot the
 board.  Indeed, due to the changes we have made to the kernel source code,
-the kernel version is now \code{5.15.<x>-dirty}, the {\em dirty}
+the kernel version is now \code{6.1.<x>-dirty}, the {\em dirty}
 keyword indicating that the Git working tree has uncommitted changes.
-The modules are therefore installed in \code{/lib/modules/5.15.<x>-dirty/},
+The modules are therefore installed in \code{/lib/modules/6.1.<x>-dirty/},
 and the version of the running Linux kernel must match this.
 
 After rebooting, try to load the module that we need:
@@ -540,7 +542,7 @@ card is available:
 \begin{bashinput}
 # cat /proc/asound/cards
  0 [Device         ]: USB-Audio - USB Audio Device
-                      GeneralPlus USB Audio Device at usb-musb-hdrc.1-1, full speed
+                      C-Media Electronics Inc. USB Audio Device at usb-5800d000.usb-1.1, full speed
 \end{bashinput}
 
 Check also the \code{/dev/snd} directory, which should now contain
@@ -685,6 +687,11 @@ command, use the same number as in the message you got in the console
 # od -x /dev/input/event3
 \end{bashinput}
 
+{\bf Caution}: using \code{od} on input event files is currently broken
+with the Musl library. We are investigating, but we will be able
+to test the Nunchuk later anyway when we compile the \code{evtest}
+program.
+
 We will use the Nunchuk to control audio playback in an upcoming lab.
 
 \section{Setting the board's model name}
@@ -743,7 +750,7 @@ Nunchuk one for the moment) and see the version changes through the
 new base directory for modules.
 
 To save space for the next lab, remove the old directory under
-<code>lib/modules</code> containing the "dirty" modules.
+\code{lib/modules} containing the "dirty" modules.
 
 Don't forget to update the kernel your board boots.
 

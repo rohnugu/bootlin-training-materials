@@ -19,14 +19,18 @@ the same kernel, environment and paths!
 \section{Preparing the driver}
 
 We will use DMA in the write path. As we will receive data from
-userspace, we will need a bounce buffer, we can eg. rename \code{buf}
-into \code{rx_buf} and create another buffer of the same size, named
-\code{tx_buf} in our \code{serial_dev} structure.
+userspace, we will need a bounce buffer, so we can create a second
+buffer named \code{tx_buf} of the same size as \code{rx_buf} in our
+\code{serial_dev} structure.
 
 As we will also need the \code{resource} structure with the MMIO physical
 addresses from outside of the \code{->probe()}, it might be relevant to save
 the \code{resource} pointer used to derive the \code{miscdev} name into the
-\code{serial_dev} structure as well.
+\code{serial_dev} structure.
+
+Finally, the device-model \code{struct device *} contained in the
+platform device will soon be very useful as well, so we can save it in
+our \code{struct serial_dev *} object.
 
 Before going further, re-compile and test your driver.
 
@@ -35,7 +39,8 @@ while we will implement a new callback named
 \code{serial_write_dma}. Remember to also update the \code{.write}
 member of \code{serial_fops} to run the DMA variant. If you want to
 avoid warnings because \code{serial_write_pio} would now be unused, you
-can define it with the \code{__maybe_unused} keyword.
+can temporarily define it with the \code{__maybe_unused} keyword, until
+we re-use it again (see below).
 
 Let's now create two helpers supposed to initialize and cleanup our DMA
 setup. We will call \code{serial_init_dma()} right before registering
@@ -56,13 +61,13 @@ compatible and the addressing masks properly set to 32-bit.
 
 We should at the very least request the DMA channel to use. Open the SoC
 device tree and find the uart2 and uart4 nodes. Look for \code{dma}
-channel properties and their names. Yes, while uart2 seem to be
-connected to the DMA controller through two different channels (one for
-each direction), uart4 is not. Hence, when requesting the channels with
-\kfunc{dma_request_chan()}, we must take care of not error-out upon the
+channel properties and their names. While uart2 seem to be connected to
+the DMA controller through two different channels (one for each
+direction), uart4 is not. Hence, when requesting the channels with
+\kfunc{dma_request_chan()}, we must take care of not erroring-out upon the
 absence of channel. Mind the return value which is a \kstruct{dma_chan}
-pointer, it must be checked with the \code{IS_ERR()} macro. You may display the
-corresponding error string with {\tt \%pe}!
+pointer, it must be checked with the \code{IS_ERR()} macro. You may
+display the corresponding error string with {\tt \%pe}!
 
 This channel will be used by all the \code{dmaengine} helpers, so better
 save it in our \code{serial_dev} structure.
@@ -150,8 +155,13 @@ struct serial_dev {
 };
 \end{verbatim}
 
-As we do not want to deal with concurrent operations anymore to simplify DMA
-handling, we can start and end the write hook with something like:
+In the write hook, we shall first check if the DMA channel has been
+properly retrieved. If not, we should definitely fallback to the PIO
+implementation.
+
+Then, in order to simplify the code, we will no longer deal with
+concurrent operations. In order to safely serialize writes, we can start
+and end the write hook with something like:
 
 \begin{verbatim}
 /* Prevent concurrent Tx */
@@ -169,9 +179,6 @@ spin_lock_irqsave(&serial->lock, flags);
 serial->txongoing = false;
 spin_unlock_irqrestore(&serial->lock, flags);
 \end{verbatim}
-
-Also do not forget to check the absence of DMA channel, return
-\code{-EOPNOTSUPP} in this case.
 
 The first step in this \code{->write()} hook is to use \code{serial->tx_buf} as
 bounce buffer by copying the user data using \kfunc{copy_from_user}. Let's
@@ -203,7 +210,7 @@ plus the additional details we can now provide:
 \begin{verbatim}
 struct dma_async_tx_descriptor *desc;
 
-desc = dmaengine_prep_slave_single(dma->txchan, dma->dma_addr + 1,
+desc = dmaengine_prep_slave_single(serial->txchan, serial->dma_addr + 1,
                                    len - 1, DMA_MEM_TO_DEV,
                                    DMA_PREP_INTERRUPT | DMA_CTRL_ACK);
 if (!desc) ...
@@ -233,7 +240,7 @@ required on the DMA controller side, but remember here we also need to trigger
 it on the UART controller side:
 
 \begin{verbatim}
-dma_async_issue_pending(dma->txchan);
+dma_async_issue_pending(serial->txchan);
 reg_write(serial, first, UART_TX);
 \end{verbatim}
 

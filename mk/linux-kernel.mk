@@ -8,7 +8,7 @@ LINUX_KERNEL_SLIDES = \
 		setup-lab \
 		kernel-introduction-title \
 		sysdev-linux-intro-features \
-		sysdev-linux-intro-sources \
+		kernel-intro-sources \
 		kernel-source-code-download-lab \
 		kernel-source-code-title \
 		kernel-source-code-drivers \
@@ -35,9 +35,6 @@ LINUX_KERNEL_SLIDES = \
 		kernel-driver-development-debugging \
 		kernel-porting \
 		kernel-power-management \
-		kernel-development-process-title \
-		sysdev-linux-intro-versioning \
-		kernel-contribution \
 		kernel-resources-references \
 		last-slides \
 		kernel-backup-slides-title \

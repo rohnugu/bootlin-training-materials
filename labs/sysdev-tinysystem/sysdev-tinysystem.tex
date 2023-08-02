@@ -143,12 +143,12 @@ filesystem and finally make it usable.
 
 \section{Root filesystem with BusyBox}
 
-Download the sources of the latest BusyBox 1.35.x release:
+Download the sources of the latest BusyBox 1.36.x release:
 
 \begin{bashinput}
 git clone https://git.busybox.net/busybox
 cd busybox/
-git checkout 1_35_0
+git checkout 1_36_stable
 \end{bashinput}
 
 Now, configure BusyBox with the configuration file provided in the
@@ -251,10 +251,10 @@ You can find it by running \code{file hello} on the host:
 
 \begin{verbatim}
 hello: ELF 32-bit LSB executable, ARM, EABI5 version 1 (SYSV), dynamically linked,
-interpreter /lib/ld-uClibc.so.0, not stripped
+interpreter /lib/ld-musl-armhf.so.1, not stripped
 \end{verbatim}
 
-So, what's missing is the \code{/lib/ld-uClibc.so.0}
+So, what's missing is the \code{/lib/ld-musl-armhf.so.1}
 executable, which is the dynamic linker required to execute any
 program compiled with shared libraries. Using the \code{find}
 command, look for this file in the toolchain install directory,
@@ -263,15 +263,16 @@ and copy it to the \code{lib/} directory on the target.
 Then, running the executable again and see that the loader executes
 and finds out which shared libraries are missing.
 
+In our case with the Musl C library, the dynamic linker also contains the
+C library, so the program should execute fine, as no further shared
+libraries are required.
+
 If you still get the same error message, work, just try again a
 few seconds later.  Such a delay can be needed because the NFS
 client can take a little time (at most 30-60 seconds) before
 seeing the changes made on the NFS server.
 
-Similarly, find the missing libraries in the toolchain and copy
-them to \code{lib/} on the target.
-
-Once the small test program works, we are going to recompile BusyBox
+Now that the small test program works, we are going to recompile BusyBox
 without the static compilation option, so that BusyBox takes
 advantages of the shared libraries that are now present on the target.
 

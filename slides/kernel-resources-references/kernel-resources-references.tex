@@ -10,6 +10,7 @@
     \item The weekly digest off all Linux and free software
       information sources
     \item In depth technical discussions about the kernel
+    \item Coverage of the features accepted in each merge window
     \item Subscribe to finance the editors (\$7 / month)
     \item Articles available for non subscribers after 1 week.
     \end{itemize}
@@ -45,6 +46,7 @@
       tools for people getting familiar with Linux kernel or driver
       development.
     \item Glossary: \url{https://kernelnewbies.org/KernelGlossary}
+    \item In depth coverage of the new features in each kernel release: \url{https://kernelnewbies.org/LinuxChanges}
     \end{itemize}
   \item The \url{https://elinux.org} wiki
 \end{itemize}
@@ -53,12 +55,12 @@
 \begin{frame}
   \frametitle{International Conferences (1)}
   \begin{columns}
-  \column{0.7\textwidth}
+  \column{0.75\textwidth}
   \begin{itemize}
     \input{../common/elc.tex}
     \input{../common/lpc.tex}
   \end{itemize}
-  \column{0.3\textwidth}
+  \column{0.25\textwidth}
      \includegraphics[width=\textwidth]{common/elc-logo.png}\\
      \vspace{1cm}
      \includegraphics[width=\textwidth]{common/lpc-logo.jpg}\\
@@ -115,4 +117,34 @@
         \url{https://scan.coverity.com/projects/linux}
   \end{itemize}
   \end{columns}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Contribute your changes}
+  Recommended resources
+  \begin{itemize}
+  \item See \kdochtml{process/submitting-patches} for guidelines
+    and \url{https://kernelnewbies.org/UpstreamMerge} for very
+    helpful advice to have your changes merged upstream (by Rik van
+    Riel).
+  \item Watch the \emph{Write and Submit your first Linux kernel
+      Patch} talk by Greg. K.H:
+    \url{https://www.youtube.com/watch?v=LLBrBBImJt4}
+  \item How to Participate in the Linux Community (by Jonathan
+    Corbet). A guide to the kernel development process
+    \url{https://j.mp/tX2Ld6}
+  \end{itemize}
+  General advices:
+  \begin{itemize}
+  \item Play with \code{git commit --fixup=} and \code{git rebase -i}
+  \item Send new versions of your changes formatted with \code{git
+    format-patch}
+    \begin{itemize}
+    \item Include a cover letter if you have more than one patch
+      (\code{--cover-letter})
+    \item Don't forget to add a changelog and use \code{-vX} to generate
+      your next iteration
+    \end{itemize}
+  \item Don't be discouraged by the feedback you get
+  \end{itemize}
 \end{frame}
