@@ -70,8 +70,9 @@
           that are accessed by the CPU are virtual
     \item The Memory Management Unit allows to map these virtual addresses to
           physical memory (either RAM or IO)
-    \item All these mappings are inserted into the page table that is used by the
-          MMU hardware to translate the CPU access to virtual addresses
+    \item All these mappings are inserted into the page table that is used
+          by the MMU hardware to translate the CPU access from virtual to
+          physical addresses
     \item The MMU allows to restrict access to the page mappings via some
           attributes
     \begin{itemize}
@@ -137,8 +138,8 @@
 \begin{frame}[fragile]
   \frametitle{Userspace memory segments}
   \begin{itemize}
-    \item When starting a process, the kernel sets up a number of various memory
-          segments (named VMAs and backed by \kstruct{vma}) that have
+    \item When starting a process, the kernel sets up several {\em Virtual
+          Memory Area}s (VMA), backed by \kstruct{vm_area_struct}), with
           different execution attributes.
     \item VMA are actually memory zones that are mapped with specific
           attributes (R/W/X).
@@ -289,8 +290,8 @@
 \begin{frame}
   \frametitle{Interrupts}
   \begin{itemize}
-    \item While handling the interrupts, it is executing in a specific context
-          named {\em interrupt context}.
+    \item While handling the interrupts, the kernel is executing in a
+          specific context named {\em interrupt context}.
     \item This context does not have access to userspace and should not use
           \kfunc{get_current}.
     \item Depending on the architecture, might use an IRQ stack.
@@ -408,7 +409,7 @@ root          11       2 [rcu_tasks_kthread]          TS
     \begin{itemize}
       \item Executed right after hardware IRQ have been handled in interrupt
             context.
-      \item Same context than executing interrupt handler so sleeping is not
+      \item Same context as executing interrupt handler so sleeping is not
             allowed.
     \end{itemize}
     \item Tasklets are using softirqs to execute their work so they run in the
@@ -607,3 +608,15 @@ long ptrace(enum __ptrace_request request, pid_t pid, void *addr, void *data);
           tracee process state
   \end{itemize}
 \end{frame}
+
+\setuplabframe
+{Preparing the system}
+{
+  Prepare the STM32MP157D board
+  \begin{itemize}
+    \item Build an image using Buildroot
+    \item Connect the board
+    \item Load the kernel from SD card
+    \item Mount the root filesystem over NFS
+  \end{itemize}
+}

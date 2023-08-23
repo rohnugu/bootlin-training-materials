@@ -3,7 +3,7 @@
 \begin{frame}
   \frametitle{Pseudo Filesystems}
   \begin{itemize}
-    \item Some virtual filesystems are exposed by the kernel and provides a lot
+    \item Some virtual filesystems are exposed by the kernel and provide a lot
           of information on the system.
     \item {\em procfs} contains information about processes and system
           information.
@@ -75,8 +75,7 @@
     \item {\em debugfs} is a simple RAM-based filesystem which exposes debugging
           information.
     \item Used by some subsystems ({\em clk}, {\em block}, {\em dma}, {\em gpio},
-          etc) to
-          display debugging information related to the internals.
+          etc) to expose debugging information related to the internals.
     \item Usually mounted on \code{/sys/kernel/debug}
     \begin{itemize}
       \item Dynamic debug features exposed through \code{/sys/kernel/debug/dynamic_debug}.
@@ -209,7 +208,7 @@ libncursesw.so.6 => /usr/lib/libncursesw.so.6 (0x00007fa2d288e000)
 \begin{frame}[fragile]
   \frametitle{Processes with {\em ps}}
   \begin{itemize}
-    \item {\em ps} command allows to display a snapshot of active processes and
+    \item The {\em ps} command allows to display a snapshot of active processes and
           their associated information (\manpage{ps}{1})
     \begin{itemize}
       \item Lists both user processes and kernel threads.

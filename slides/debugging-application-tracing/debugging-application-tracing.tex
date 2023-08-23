@@ -30,6 +30,7 @@
   \begin{block}{}
     \begin{minted}[fontsize=\small]{c}
 #include <string.h>
+#include <unistd.h>
 
 ssize_t read(int fd, void *data, size_t size) {
   memset(data, 0x42, size);
@@ -51,7 +52,7 @@ $ gcc -shared -fPIC -o my_lib.so my_lib.c
   \end{itemize}
   \begin{block}{}
     \begin{minted}[fontsize=\small]{console}
-$ LD_PRELOAD=my_lib.so ./exe
+$ LD_PRELOAD=./my_lib.so ./exe
     \end{minted}
   \end{block}
 \end{frame}
@@ -83,8 +84,8 @@ $ LD_PRELOAD=my_lib.so ./exe
     \item {\em perf} can profile both user-space and kernel-space execution.
     \item {\em perf} is based on the \code{perf_event} interface that is
           exposed by the kernel.
-    \item {\em perf} provides a set of operations that each have specific
-          arguments (see {\em perf} help).
+    \item Provides a set of operations, each having specific arguments (see
+          {\em perf} help).
     \begin{itemize}
       \item \code{stat}, \code{record}, \code{report}, \code{top}, \code{annotate}, \code{ftrace}, \code{list}, \code{probe}, etc
     \end{itemize}
@@ -139,7 +140,7 @@ $ perf record -e probe_app:my_func -e probe_libc:printf
 \end{frame}
 
 \setuplabframe
-{Debugging application issues}
+{Application tracing}
 {
   Analyzing of application interactions
   \begin{itemize}

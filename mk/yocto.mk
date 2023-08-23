@@ -28,6 +28,7 @@ YOCTO_SLIDES    = \
 		yocto-sdk \
 		yocto-sdk-lab \
 		yocto-devtool \
+		yocto-devtool-lab \
 		yocto-layer-management \
 		yocto-runtime-package-management \
 		yocto-resources \
@@ -43,4 +44,4 @@ YOCTO_LABS    = setup \
 		yocto-custom-machine \
 		yocto-custom-image \
 		yocto-sdk \
-		yocto-sdk-eclipse
+		yocto-devtool
