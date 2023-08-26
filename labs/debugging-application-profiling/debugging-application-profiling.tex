@@ -55,7 +55,7 @@ the results with \code{heaptrack_gui}.
 
 \section{Cachegrind \& Callgrind}
 
-Cachegrind and Callgrind allows to profile a userspace application by
+Cachegrind and Callgrind allow to profile a userspace application by
 simulating the processor that will run it. In order to analyze our application
 and understand where time is spent, we are going to profile it with both
 tools.
@@ -110,8 +110,7 @@ Looking at the results, it seems like our conversion function is
 actually taking a negligible time. However, valgrind simulate the program with
 an "ideal" cache. In real life, the processor is often used by other
 applications and the kernel also takes some time to execute which leads to cache
-disturbance. Hence, callgrind is a good tool to optimize applications based on
-CPU time
+disturbance.
 
 \section{Perf}
 
@@ -125,8 +124,8 @@ event, use \code{perf list} on the target to find it amongst the cache events:
 $ perf list cache
 \end{bashinput}
 
-Once found, execute the program on the target using perf stat and specified that event
-using -e:
+Once found, execute the program on the target using \code{perf stat} and
+specify that event using \code{-e}:
 
 \begin{bashinput}
 $ perf stat -e L1-dcache-store-misses ./png_convert tux.png out.png
@@ -148,7 +147,6 @@ contain the traces that have been recorded. These traces can be analyzed using
 
 \begin{bashinput}
 $ sudo chown $USER:$USER perf.data
-$ export CROSS_COMPILE=/home/$USER/debugging-labs/buildroot/output/host/bin/arm-linux-
 $ perf report --symfs=/home/$USER/debugging-labs/buildroot/output/staging/
     -k /home/$USER/debugging-labs/buildroot/output/build/linux-5.13/vmlinux
 \end{bashinput}
@@ -166,14 +164,7 @@ $ perf record --call-graph dwarf ./png_convert tux_small.png out.png
 We specify that we want to record the call graph using the DWARF information
 that are contained in ELF file (compiled with \code{-g}). Once recorded, on the
 desktop platform, display the results with \code{perf report} and compare them
-with callgrind ones on your development platform:
-
-\begin{bashinput}
-$ sudo chown $USER:$USER perf.data
-$ export CROSS_COMPILE=/home/$USER/debugging-labs/buildroot/output/host/bin/arm-linux-
-$ perf report --symfs=/home/$USER/debugging-labs/buildroot/output/staging/
-   -k /home/$USER/debugging-labs/buildroot/output/build/linux-5.13/vmlinux
-\end{bashinput}
+with callgrind ones on your development platform.
 
 {\em NOTE: the vmlinux file used for the \code{-k} option must match the kernel
 build id that is running on the board or perf will not use it.}

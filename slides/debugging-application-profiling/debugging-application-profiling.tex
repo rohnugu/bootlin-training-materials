@@ -90,8 +90,8 @@
     \item Allocating/freeing memory too much can lead to the kernel spending a
           considerable amount of time in \code{clear_page()}.
     \begin{itemize}
-      \item Due to the fact the kernel clear pages before giving them to
-            processes to avoid data leakage.
+      \item The kernel clears pages before giving them to processes to
+            avoid data leakage.
     \end{itemize}
     \item Reducing application memory footprint can allow optimizing cache usage
           as well as page miss.
@@ -299,7 +299,7 @@ Histogram for block sizes:
     \begin{minted}[fontsize=\tiny]{console}
 $ perf stat convert foo.png foo.jpg
 
-Performance counter stats for 'convert slides/debugging-kernel-debugging/oops_1.png foo.jpg':
+Performance counter stats for 'convert foo.png foo.jpg':
 
            45,52 msec task-clock                #    1,333 CPUs utilized          
                4      context-switches          #   87,874 /sec                   
@@ -406,7 +406,7 @@ $ valgrind --tool=callgrind ./my_program
 
   \item \code{callgrind_annotate} is a CLI tool used to visualize callgrind
         simulation results.
-  \item Results can also be visualized using a GUI tool named Kcachegrind.
+  \item Kcachegrind can visualize {\em callgrind} results too.
   \item The cache simulation (done using cachegrind) has some accuracy
         shortcomings (See \href{https://valgrind.org/docs/manual/cg-manual.html#cg-manual.annopts.accuracy}{Cachegrind accuracy})
   \end{itemize}

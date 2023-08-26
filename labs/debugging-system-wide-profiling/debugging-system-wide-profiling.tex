@@ -43,7 +43,7 @@ $ perf probe --source=./ -x ./crc_random -L main
   \item In order to be able to add such userspace probe, perf needs to access
 symbols and source file
   \item If perf output is filled with misinterpreted ANSI escape sequences, you
-  can run the listing command on your host
+  can append \code{| cat} to the command or run the listing command on your host
  \end{itemize}}
 
 Then, we can create a uprobe and capture the crc value using:
@@ -118,13 +118,13 @@ new rule and modifying the existing one to generate the tracepoints files using
 \code{lttng-gen-tp}:
 
 \begin{bashinput}
-  CC=${CROSS_COMPILE}gcc
+  export CC=${CROSS_COMPILE}gcc
 
   crc_random: crc_random.c crc_random-tp.o
-      ${CC} $^ -g3 -I. -llttng-ust -o $@
+      ${CC} $^ -g3 -llttng-ust -o $@
 
   crc_random-tp.o: crc_random-tp.tp
-      ${CC} lttng-gen-t<
+      lttng-gen-tp $<
 \end{bashinput}
 
 You can then use the new tracepoints in your program to trace specific points
