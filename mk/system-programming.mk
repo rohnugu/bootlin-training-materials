@@ -1,10 +1,11 @@
 SYSTEM_PROGRAMMING_SLIDES = \
 		first-slides-dnslab \
-		about-us \
+		about-bootlin \
 		course-information-title \
-		discovery-board-dk1 \
-		sysdev-shopping-list-stm32 \
-		beagleboneblack-board-also-supported \
+		beagleplay-board \
+		sysdev-shopping-list-bbb \
+				discovery-board-also-supported \
+				beagleboneblack-board-also-supported \
 		course-information \
 		sysdev-intro \
 		sysdev-dev-environment \
@@ -50,13 +51,13 @@ SYSTEM_PROGRAMMING_SLIDES = \
 
 SYSTEM_PROGRAMMING_LABS   = setup \
 		sysdev-toolchain \
-		sysdev-u-boot-stm32 \
+		sysdev-u-boot-beagleplay \
 		sysdev-kernel-fetch-sources \
 		sysdev-kernel-cross-compiling \
 		sysdev-tinysystem \
-		sysdev-accessing-hardware-stm32 \
-		sysdev-block-filesystems-stm32 \
-		sysdev-thirdparty-stm32 \
+		sysdev-accessing-hardware-beagleplay \
+		sysdev-block-filesystems-beagleplay \
+		sysdev-thirdparty-beagleplay \
 		sysdev-buildroot \
 		sysdev-system-integration \
 		sysdev-application-development-and-debugging

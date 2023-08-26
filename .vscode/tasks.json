@@ -6,7 +6,11 @@
         {
             "label": "make AICS321",
             "type": "shell",
-            "command": "make full-system-programming-slides.pdf",
+            "command": "make",
+            "args": ["full-system-programming-slides.pdf"],
+            "options": {
+                "cwd": "${workspaceFolder}"
+              },
             "problemMatcher": [],
             "group": {
                 "kind": "build",
