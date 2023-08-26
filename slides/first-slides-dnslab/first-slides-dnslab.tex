@@ -2,44 +2,49 @@
 
 \begin{frame}{Heejun Roh}
   \begin{itemize}
-  \item Deparment Head and Assistant Professor of {\bf Korea University Sejong Campus}.
+  \item Current Dept Head and Assistant Professor of {\bf Korea University Sejong Campus}
+    \begin{itemize}
+      \item Former Research Professor of {\em Future Network Center, Korea University} (2017-2019)
+    \end{itemize}
   \item Education
   \begin{itemize}
     \item Ph.D. in Computer Science and Engineering, Graduate School, Korea University
     \item M.S. in Computer Science and Engineering, Graduate School, Korea University
     \item B.S. in Computer Science and Engineering and Mathematics (Double Major), Korea University
-  \end{itemize}
-  \item Research Professor of {\em Future Network Center, Korea University} (2017-2019)
-  \item Research Interests: Network Traffic Monitoring and Analysis, Security and Privacy in Wireless and Mobile Networks, RF-powered Computing and Networking, etc.
+  \end{itemize}  
+  \item Research Interests: Network Traffic Monitoring and Analysis, Security and Privacy in Wireless and Mobile Networks, etc.
   \item Office: Room 207, Sci. Tech. Bldg II, KU Sejong
-  \item E-mail: \code{hjroh@korea.ac.kr} or +82-10-9852-6156
-  \item Websites:
-  \begin{itemize}
-    \item Laboratory: \url{https://dnslab.korea.ac.kr/}
-    \item Personal: \url{https://netlab.korea.ac.kr/hjroh}
-  \end{itemize}
+  \item Contacts
+    \begin{itemize}
+      \item E-mail: \code{hjroh@korea.ac.kr} or +82-10-9852-6156
+      \item Laboratory Website: \url{https://dnslab.korea.ac.kr/}
+      \item Personal Website: \url{https://netlab.korea.ac.kr/hjroh}
+    \end{itemize}
   \end{itemize}
 \end{frame}
 
 
 \begin{frame}{Syllabus}
   \begin{itemize}
-  \item Class Description
+    \item Basic Information
     \begin{itemize}
-      \item In this course, we study essentials of system programming, which is essential for cyber security major. By understanding the details of Linux operating system focusing on the Linux kernel, system calls, and system software development, we study fundamental concepts, principles, and techniques toward secure software design and implementation.
+    \item Class Description
+      \begin{itemize}
+        \item In this course, we study essentials of system programming, which is essential for cyber security major. By understanding the details of Linux operating system focusing on the Linux kernel, system calls, and system software development, we study fundamental concepts, principles, and techniques toward secure software design and implementation.
+      \end{itemize}
+    \item Correlation with core competences and departmental objectives
+      \begin{itemize}
+        \item Based on understanding system programming essentials, we try to correlate the ideas with problem solving and professionalism in pragmatic practice.
+      \end{itemize} 
+    \item Study Objectives
+      \begin{itemize}
+        \item Students will study the Linux system architecture, how to build, setup, and use a toolchain, how to interact with hardware devices, and how to develop system software in Linux.
+      \end{itemize}
+    \item Course Objectives
+      \begin{itemize}
+        \item We focus on the embedded Linux system development, rather than the advanced system programming topics such as advanced file I/O, process management, threading, file and directory management, signals, time, etc. Of course, this approach has pros and cons, but your understanding on embedded Linux system will be deep.
+      \end{itemize}  
     \end{itemize}
-  \item Correlation with core competences and departmental objectives
-    \begin{itemize}
-      \item Based on understanding system programming essentials, we try to correlate the ideas with problem solving and professionalism in pragmatic practice. That is, research capability in computing and pragmatic practices are highly related with this course.
-    \end{itemize} 
-  \item Study Objectives
-    \begin{itemize}
-      \item From this course, students will study the Linux system architecture, how to build, setup, and use a toolchain, how to interact with hardware devices, and how to develop system software in Linux.
-    \end{itemize}
-  \item Course Objectives
-    \begin{itemize}
-      \item We focus on the embedded Linux system development, rather than the advanced system programming topics such as advanced file I/O, process management, threading, file and directory management, signals, time, etc. Of course, this approach has pros and cons, but your understanding on embedded Linux system will be deep.
-    \end{itemize}  
   \end{itemize}
 \end{frame}
 
@@ -48,27 +53,59 @@
   \item Prerequisite Subjects
     \begin{itemize}
       \item Intermediate level of Linux experience is required. If you forgot how to use Linux, please check `The Missing Semester of Your CS Education' \url{https://missing.csail.mit.edu/} where you can find the Korean version. Or if you prefer Korean language, 생활코딩's Linux Playlist would be useful: \url{https://www.youtube.com/watch?v=DsG-JWrFJTc}.
-
-      \item Programming experiences in the C programming language are required. Also, taking our major's Computer Architecture course (AICS221) and Operating System course (AICS302) are highly recommended.
+      \item If you want to study Linux from books, the lecturer recommends the following books:
+        \begin{itemize}
+          \item William E. Shotts, Jr., The Linux Command Line: A Complete Introduction, No Starch Press, 2012. (ISBN: 9781593273897; 한국어판有 - 이종우, 정영신譯, 리눅스 커맨드라인 완벽 입문서, BJ퍼블릭刊; 한국어판 ISBN: 9788994774299)
+          \item Brian Ward, How Linux Works: What Every Superuser Should Know, 3rd Ed., No Starch Press, 2021. (ISBN: 9781718500402; 한국어판有 - 유하영, 전우영譯, 슈퍼 사용자라면 반드시 알아야 할 리눅스 작동법, 2nd Ed., BJ퍼블릭, 2015; 한국어판 ISBN: 9791186697054)
+          \item 백창우, 유닉스 리눅스 프로그래밍 필수 유틸리티 - vim, make, gcc, gdb, svn, binutils, 2nd Ed., 한빛미디어, 2010. (ISBN: 9788979147599)
+        \end{itemize}
     \end{itemize}
-  \item Textbook \& References: We will primarily use slide sets, but the following books can be helpful.
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Syllabus}
+  \begin{itemize}
+  \item Prerequisite Subjects
+    \begin{itemize}
+      \item Programming experiences in the C programming language are required. Also, taking our major's Computer Architecture course (AICS221), Network Security (AICS324) and Operating System course (AICS302) are highly recommended.
+      \begin{itemize}
+        \item \textbf{[Computer Architecture Textbook]} Randal E. Bryant and David R. O'Hallaron, Computer Systems: A Programmer's Perspective - Global Edition, 3rd Ed., Pearson, 2015. (ISBN: 9780134092669; 한국어판有 - 김형신譯, 컴퓨터 시스템, 퍼스트북刊; 한국어판 ISBN: 9791185475219)
+        \item \textbf{[Operating Systems Textbook]} Remzi H. Arpaci-Dusseau and Andrea C. Arpaci-Dusseau, Operating Systems: Three Easy Pieces (v1.00), Arpaci-Dusseau Books, 2018. (ISBN: 978-1985086593; 한국어판有 - 원유집, 박민규, 이성진 譯, 운영체제: 아주 쉬운 세 가지 이야기 (v1.00), 2판, 홍릉과학출판사刊, 한국어판 ISBN: 979-1156007937)
+        \item \textbf{[Network Security Textbook (2)]} Kevin Fall and W. Richard Stevens, TCP/IP Illustrated, Vol. 1, 2nd Ed., Pearson, 2011. (ISBN: 9780321336316; 한국어판有 – 김충규, 이광수, 이재광, 홍충선譯, TCP/IP Illustrated, Vol. 1 (TCP/IP 네트워크 프로토콜의 이해, 이정문 감수 재출간판), 2nd Ed., 에이콘출판사, 2021. ISBN: 9791161755632)
+      \end{itemize}
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Syllabus}
+  \begin{itemize}
+  \item Textbook \& References: \\ We will primarily use slide sets, but the following books can be helpful.
     \begin{enumerate}
       \item 윤현주, Linux: 기초에서 시스템 프로그래밍까지, 2nd Ed., 도서출판 홍릉, 2021. (for beginners only)
       \item Robert Love, Linux System Programming, 2nd Ed., O'Reilly, 2013. (한국어판有 - 김영근譯, 리눅스 시스템 프로그래밍, 2nd Ed., 한빛미디어, 2017.)
       \item Rodolfo Giometti, GNU/Linux Rapid Embedded Programming, 1st Ed., Packt Publishing, 2017. (한국어판有 - 정병혁譯, GNU/Linux 쾌속 임베디드 프로그래밍, 1st Ed., 에이콘출판사, 2018.)
       \item 김동현, 디버깅을 통해 배우는 리눅스 커널의 구조와 원리: 라즈베리 파이로 따라하면서 쉽게 이해할 수 있는 리눅스 커널 Vol. 1 and 2, 1st Ed., 위키북스, 2020.
       \item 김동현, 시스템 소프트웨어 개발을 위한 Arm 아키텍처의 구조와 원리: Armv8-A와 Armv7-A로 배우는 시스템 반도체와 전기자동차 시스템 개발의 핵심, 1st Ed., 위키북스, 2023.
-      \item Brian Ward, How Linux Works: What Every Superuser Should Know, 3rd Ed., No Starch Press, 2021. (ISBN: 9781718500402; 한국어판有 - 유하영, 전우영譯, 슈퍼 사용자라면 반드시 알아야 할 리눅스 작동법, 2nd Ed., BJ퍼블릭, 2015; 한국어판 ISBN: 9791186697054)
-      \item Randal E. Bryant and David R. O'Hallaron, Computer Systems: A Programmer's Perspective - Global Edition, 3rd Ed., Pearson, 2015. (ISBN: 9780134092669; 한국어판有 - 김형신譯, 컴퓨터 시스템, 퍼스트북刊; 한국어판 ISBN: 9791185475219)
     \end{enumerate}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Syllabus}
+  \begin{itemize}  
   \item Homework
     \begin{itemize}
       \item Many programming projects should be done. (Once for 1-2 weeks)
       \item No late submission for every homework/projects.      
     \end{itemize}
+  \item Evaluation:\\ We have \textbf{NO EXAM}. Instead, strong participation of in-class and homework activities is required. Also, you need to make a system software so that a proposal and final report are expected.
+    \begin{itemize}
+      \item Activites: 70\% (including 10\% of project proposal)
+      \item Final Report: 20\% (The submissions will be publicly opened to prevent plagiarism.)
+      \item Attendance: 10\%
+    \end{itemize}    
   \end{itemize}
 \end{frame}
-
 
 %% \ifdefempty{\trainer}의 바로 뒤에 {}는 \trainer가 정의되지 않았을 때 동작을 말하는 것이고, 그 뒤의 {}는 \trainer가 정의되었을 때의 동작임. 따라서 아래 코드는 \trainer가 정의되었을 때 (trainer 이름).tex를 읽어와 삽입하는 기능임
 \ifdefempty{\trainer}{}{

@@ -13,6 +13,12 @@ Lecturer: Heejun Roh, Ph.D.
  - `common` 디렉토리에 타이틀 템플릿을 만듬 (e.g., `cp embedded-linux-title.tex system-progarmming.tex`)
  - TRAINER는 make에서 전달하는 인자로 덮어쓰기가 가능하지만, STYLESHEET는 Makefile에서 전달을 무시하고 정의하고 있기 때문에 Makefile의 수정은 필수임. `STYLESHEET = common/beamerthemebootlin.sty`를 `STYLESHEET = common/beamerthemeDNSLab.sty`로 변경해야 함
 
+ - slides/first-slides에 `[트레이너 이름].tex`를 작성한 경우
 ```
 make TRAINER=heejun-roh full-system-programming-slides.pdf
+```
+
+ - 그게 아니면 기본 모드로 빌드됨
+```
+make full-system-programming-slides.pdf
 ```

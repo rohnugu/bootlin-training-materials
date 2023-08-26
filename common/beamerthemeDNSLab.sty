@@ -14,6 +14,7 @@
 \useoutertheme{default}
 \usecolortheme{beaver}
 
+\usepackage{pifont} % to use \ding
 \usepackage{fontspec}
 %\setmainfont{Latin Modern Roman}
 %\setsansfont{Latin Modern Sans}
@@ -58,13 +59,15 @@ CJKecglue={}%   % Western과 CJK 사이의 공백 지정: {}로 간격을 없앰
 \setbeamercolor{itemize subitem}{fg=blorange}
 \setbeamercolor{itemize subsubitem}{fg=blorange}
 \setbeamertemplate{itemize subitem}[circle]
-\setbeamertemplate{itemize subsubitem}[square]
+\setbeamertemplate{itemize subsubitem}[circle]
 \setbeamercolor{enumerate item}{fg=blorange}
 \setbeamercolor{enumerate subitem}{fg=blorange}
 \setbeamercolor{enumerate subsubitem}{fg=blorange}
 
-\setbeamerfont{itemize/enumerate body}{family=\sffamily, size={\fontsize{10}{10}}}
-\setbeamerfont{itemize/enumerate subbody}{family=\sffamily, size={\fontsize{8}{8}}}
+\setbeamerfont{itemize/enumerate body}{family=\sffamily, size=\small}
+\setbeamerfont{itemize/enumerate subbody}{family=\sffamily, size=\footnotesize}
+\setbeamerfont{itemize/enumerate subsubbody}{family=\sffamily, size=\scriptsize}
+\setbeamerfont{itemize/enumerate subsubsubbody}{family=\sffamily, size=\tiny}
 
 
 % Custom Bootlin commands
@@ -137,7 +140,7 @@ CJKecglue={}%   % Western과 CJK 사이의 공백 지정: {}로 간격을 없앰
 
 \newcommand\titleframe
 {
-  \begin{frame}{DNSLab Lecture Notes Series}
+  \begin{frame}[c]{DNSLab Lecture Notes Series}
     \begin{columns}[b]
       \column{0.7\textwidth}
       \Large
@@ -163,7 +166,7 @@ CJKecglue={}%   % Western과 CJK 사이의 공백 지정: {}로 간격을 없앰
 
 \AtBeginSection[]
 {
-  \begin{frame}{\insertsectionhead}
+  \begin{frame}[c]{\insertsectionhead}
     \begin{columns}[b]
       \column{0.5\textwidth}
       \huge
