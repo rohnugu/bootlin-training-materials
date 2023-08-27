@@ -5,6 +5,7 @@
 \usepackage{common}
 \usepackage[absolute,verbose,overlay]{textpos}
 \usepackage{fancyvrb,xcolor}
+\usepackage{fvextra} % for Verbatim
 \setlength{\TPHorizModule}{\paperwidth}
 \setlength{\TPVertModule}{\paperheight}
 \usepackage{array}
@@ -110,26 +111,31 @@ CJKecglue={}%   % Western과 CJK 사이의 공백 지정: {}로 간격을 없앰
   \hbox{%
     \begin{beamercolorbox}[wd=\paperwidth,ht=3ex,dp=1.5ex]{frametitle}%
       \usebeamerfont{frametitle}
-      \begin{textblock}{.2}[0.5,0.5](0.12,0.08)
-       \includegraphics[width=0.8cm]{common/logo-koreauniv-symbol.pdf}
+      \begin{textblock}{0.05}[0,0](0.01,0.03)
+        %\textblockcolour{black} for debug
+      %\begin{textblock}{.2}[0.5,0.5](0.12,0.08)
+       \includegraphics[width=0.6cm]{common/logo-koreauniv-symbol.pdf}
       \end{textblock}
-      \hspace{1.25cm}
+      \hspace{0.70cm}
       \insertframetitle
     \end{beamercolorbox}
   }
-  \vskip-1em\vskip2pt
+  \vskip-1em
+  \vskip2pt
   \hbox{\hskip-1cm\color{blorange}\vrule width \paperwidth height 1pt}%
+  \vspace{-0.17cm}
 }
 
 % Footer
 \defbeamertemplate*{footline}{DNSLabtheme}
 {
-  \hbox{\color{crimsonKU}\vrule width \paperwidth height 0.1pt \vspace{0.1cm}}
+  \hbox{\color{crimsonKU}\vrule width \paperwidth height 0.1pt \vspace{0.1cm}} % line
   \hbox{%
-    \begin{beamercolorbox}[wd=\paperwidth,ht=2.25ex,dp=1ex,leftskip=0.5em]{palette primary}%
-      \begin{tabular*}{\textwidth}[t]{@{\extracolsep{\fill}} llr}
-        \includegraphics[width=0.07\textwidth]{common/koreauniv-logo.pdf} & 
-        Defensible Networked Systems Laboratory (DNSLab) ~{\tt https://dnslab.korea.ac.kr} & \insertframenumber{}/\inserttotalframenumber{}
+    \begin{beamercolorbox}[wd=\paperwidth,ht=1.8ex,dp=1ex,leftskip=0.5em]{palette primary}%
+      \begin{tabular*}{\textwidth}[b]{@{\extracolsep{\fill}} llr}
+        %\includegraphics[width=0.05\textwidth]{common/koreauniv-logo.pdf} &
+        {\color{crimsonKU} \textbf{KU Sejong}} &
+        \textbf{Defensible Networked Systems Laboratory (DNSLab)} ~{\tt https://dnslab.korea.ac.kr} & \insertframenumber{}/\inserttotalframenumber{}
       \end{tabular*}
     \end{beamercolorbox}
   }
@@ -206,7 +212,7 @@ CJKecglue={}%   % Western과 CJK 사이의 공백 지정: {}로 간격을 없앰
 %%  second argument: contents of the slide
 \newcommand\setuplabframe[2]{
   \begin{frame}{Practical lab - #1}
-    \begin{columns}
+    \begin{columns}[T]
       \column{0.4\textwidth}
       \includegraphics[width=\textwidth]{common/lab-penguins.pdf}
       \column{0.6\textwidth}
@@ -214,3 +220,28 @@ CJKecglue={}%   % Western과 CJK 사이의 공백 지정: {}로 간격을 없앰
       \end{columns}
   \end{frame}
 }
+
+% for showing margin space
+% \usepackage{everypage}
+
+% \usepackage{lipsum}
+% \usepackage{calc}
+% \usepackage{fancyhdr}
+% \pagestyle{fancy}
+% \fancyhf{}
+% \fancyhead[C]{This is also a header test}
+% \fancyfoot[C]{This is also a footer test}
+% \AddEverypageHook{\hbox{\color{blue!40}\smash{\hspace{\oddsidemargin}%
+%   \rule[-\textheight-\headsep-\headheight-\topmargin]{\textwidth}{\textheight}%
+% }}}
+% \AddEverypageHook{\hbox{\color{blue!30}\smash{\hspace{\oddsidemargin}%
+%   \rule[-\headheight-\topmargin]{\textwidth}{\headheight}%
+% }}}
+% \AddEverypageHook{\hbox{\color{blue!20}\smash{\hspace{\oddsidemargin}%
+%   \rule[-\textheight-\headsep-\headheight-\topmargin-\footskip]{\textwidth}{\headheight}%
+% }}}
+% \AddEverypageHook{\hbox{\color{blue!10}\smash{\hspace{\oddsidemargin}%
+%   \hspace{\textwidth}\hspace{\marginparsep}%
+%   \rule[-\textheight-\headsep-\headheight-\topmargin]{\marginparwidth}{\textheight}%
+% }}}
+\usepackage{layout}

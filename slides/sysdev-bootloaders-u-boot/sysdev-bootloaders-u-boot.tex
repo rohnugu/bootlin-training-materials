@@ -1,8 +1,9 @@
 \subsection{The U-boot bootloader}
 
 \begin{frame}{U-Boot}
-  \begin{columns}
+  \begin{columns}[T]
     \column{0.7\textwidth}
+    \setbeamerfont{itemize/enumerate body}{size=\footnotesize}
       U-Boot is a typical free software project
       \begin{itemize}
       \item License: GPLv2 (same as Linux)
@@ -117,7 +118,7 @@ CONFIG_STM32_SPI=y
 \end{frame}
 
 \begin{frame}[fragile]{U-Boot configuration}
-  \begin{columns}
+  \begin{columns}[T]
     \column{0.6\textwidth}
     \begin{itemize}
     \item U-Boot must be configured before being compiled
@@ -205,11 +206,11 @@ $ make CROSS_COMPILE=arm-linux-
     Wireless:
     \projfile{u-boot}{arch/arm/dts/am335x-boneblack-wireless.dts}
   \item Configure and build U-Boot
-\begin{verbatim}
+\begin{Verbatim}[breaklines=true,breakanywhere=true]
 $ export PATH=/path/to/toolchain/bin:$PATH
 $ make am335x_evm_defconfig
 $ make DEVICE_TREE=am335x-boneblack-wireless CROSS_COMPILE=arm-linux-
-\end{verbatim}
+\end{Verbatim}
   \item Produces:
     \begin{itemize}
     \item \code{MLO}, the SPL, first-stage bootloader. Called MLO ({\em
@@ -316,7 +317,7 @@ usb info [dev] - show available USB devices
 
 \begin{frame}[fragile]{U-Boot information commands}
 
-  \begin{columns}
+  \begin{columns}[T]
     \column{0.5\textwidth}
     \begin{block}{Version details: \code{version}}
       {\tiny
@@ -421,7 +422,7 @@ Video       = display-controller@5a001000 inactive
 \end{frame}
 
 \begin{frame}{U-Boot environment persistent storage}
-  \begin{columns}
+  \begin{columns}[T]
     \column{0.5\textwidth}
     Depending on the configuration, the U-Boot environment can be:
     \begin{itemize}
@@ -556,7 +557,7 @@ serverip=10.0.0.100
     \column{0.5\textwidth}
     \begin{block}{List partitions on MMC}
       {\tiny
-\begin{verbatim}
+      \begin{Verbatim}[breaklines=true, breakanywhere=true]
 STM32MP> mmc part
 Partition Map for MMC device 0  --   Partition Type: EFI
 
@@ -580,30 +581,30 @@ Part    Start LBA       End LBA         Name
         type:   linux
         guid:   6251ecf7-d985-4d81-a396-7a6b6fab8b7c
   [...]
-\end{verbatim}
+\end{Verbatim}
       }
     \end{block}
     \column{0.5\textwidth}
 
     \begin{block}{Read block 0x22 from MMC to RAM 0xc0000000}
       {\tiny
-\begin{verbatim}
+\begin{Verbatim}[breaklines=true, breakanywhere=true]
 STM32MP> mmc read c0000000 22 1
 
 MMC read: dev # 0, block # 34, count 1 ... 1 blocks read: OK
-\end{verbatim}
+\end{Verbatim}
       }
     \end{block}
 
     \begin{block}{Dump memory at 0xc00000000}
       {\tiny
-\begin{verbatim}
+\begin{Verbatim}[breaklines=true, breakanywhere=true]
 STM32MP> md c0000000
 c0000000: 324d5453 00000000 00000000 00000000  STM2............
 c0000010: 00000000 00000000 00000000 00000000  ................
 c0000020: 00000000 00000000 00000000 00000000  ................
 c0000030: 00000000 00000000 00000000 00000000  ................
-\end{verbatim}
+\end{Verbatim}
       }
     \end{block}
   \end{columns}
@@ -639,7 +640,7 @@ c0000030: 00000000 00000000 00000000 00000000  ................
 
 \begin{frame}[fragile]{U-Boot filesystem command example}
   \begin{columns}
-    \column{0.5\textwidth}
+    \column{0.35\textwidth}
     \begin{block}{List files}
       {\tiny
 \begin{verbatim}
@@ -665,7 +666,7 @@ STM32MP> ls mmc 0:4 /etc
       }
     \end{block}
 
-    \column{0.5\textwidth}
+    \column{0.65\textwidth}
     \begin{block}{Load file}
       {\tiny
 \begin{verbatim}

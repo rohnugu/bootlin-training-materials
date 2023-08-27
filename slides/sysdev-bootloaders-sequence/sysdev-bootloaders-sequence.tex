@@ -182,7 +182,7 @@
   \begin{columns}
     \column{0.7\textwidth}
     \begin{center}
-      \includegraphics[height=0.85\textheight]{slides/sysdev-bootloaders-sequence/stm32mp1-rom-code.png}
+      \includegraphics[height=0.7\textheight]{slides/sysdev-bootloaders-sequence/stm32mp1-rom-code.png}
     \end{center}
     \column{0.3\textwidth}
     {\tiny
@@ -193,10 +193,10 @@
 \end{frame}
 
 \begin{frame}{Booting on AM335x: datasheet}
-  \begin{columns}
+  \begin{columns}[T]
       \column{0.6\textwidth}
       \begin{center}
-        \includegraphics[height=0.85\textheight]{slides/sysdev-bootloaders-sequence/am335x-rom-code.png}
+        \includegraphics[height=0.7\textheight]{slides/sysdev-bootloaders-sequence/am335x-rom-code.png}
       \end{center}
       \column{0.4\textwidth}
       {\tiny
@@ -214,8 +214,8 @@
 \end{frame}
 
 \begin{frame}{ROM code recovery mechanism}
-  \begin{columns}
-    \footnotesize
+  \begin{columns}[T]
+    \setbeamerfont{itemize/enumerate body}{size=\footnotesize}
     \column{0.6\textwidth}
     \begin{itemize}
     \item Most ROM code also provide some sort of {\em recovery}
@@ -242,8 +242,9 @@
 \subsection{Bootloaders}
 
 \begin{frame}{GRUB}
-  \begin{columns}
+  \begin{columns}[T]
     \column{0.6\textwidth}
+    \setbeamerfont{itemize/enumerate body}{size=\footnotesize}
     \begin{itemize}
     \item {\em Grand Unified Bootloader}, from the GNU project
     \item De-facto standard in most Linux distributions for x86
@@ -264,7 +265,7 @@
 \end{frame}
 
 \begin{frame}{Syslinux}
-  \begin{columns}
+  \begin{columns}[T]
     \column{0.8\textwidth}
     \begin{itemize}
     \item For network and removable media booting (USB key, SD card, CD-ROM)
@@ -283,7 +284,7 @@
 \end{frame}
 
 \begin{frame}{systemd-boot}
-  \begin{columns}
+  \begin{columns}[T]
     \column{0.7\textwidth}
     \begin{itemize}
     \item Simple UEFI boot manager
@@ -315,7 +316,7 @@
 \end{frame}
 
 \begin{frame}{U-Boot}
-  \begin{columns}
+  \begin{columns}[T]
     \column{0.7\textwidth}
     \begin{itemize}
     \item The de-facto standard and most widely used bootloader on
@@ -334,7 +335,7 @@
 \end{frame}
 
 \begin{frame}{Barebox}
-  \begin{columns}
+  \begin{columns}[T]
     \column{0.7\textwidth}
     \begin{itemize}
     \item Another bootloader for most embedded CPU architectures:
@@ -423,8 +424,9 @@
 \end{frame}
 
 \begin{frame}{Interfaces with secure firmware}
-  \begin{columns}
+  \begin{columns}[T]
     \column{0.8\textwidth}
+    \setbeamerfont{itemize/enumerate body}{size=\footnotesize}
     \begin{itemize}
     \item Standardized by ARM
     \item Services
@@ -504,7 +506,7 @@
   \begin{center}
     \includegraphics[height=0.70\textheight]{slides/sysdev-bootloaders-sequence/arm-nomenclature.pdf}
   \end{center}
-  {\small Largely inspired from {\em Ahmad Fatoum} presentation
+  {\footnotesize Largely inspired from {\em Ahmad Fatoum} presentation
     {\em From Reset Vector to Kernel},
     \href{https://archive.fosdem.org/2021/schedule/event/from_reset_vector_to_kernel/attachments/slides/4632/export/events/attachments/from_reset_vector_to_kernel/slides/4632/from_reset_vector_to_kernel.pdf}{slides},
     \href{https://www.youtube.com/watch?v=-Ak9MWGxd7M}{video}}\\
@@ -514,7 +516,7 @@
 \end{frame}
 
 \begin{frame}{RISC-V}
-  \begin{columns}
+  \begin{columns}[T]
     \column{0.7\textwidth}
     \begin{itemize}
     \item Linux-class RISC-V processors have several privilege levels

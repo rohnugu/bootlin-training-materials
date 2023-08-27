@@ -71,8 +71,8 @@
 
 \begin{frame}[fragile]{Example of toolchains from ARM: using}
   \begin{block}{}
-    {\tiny
-\begin{verbatim}
+    {\scriptsize
+\begin{Verbatim}[breaklines=true, breakanywhere=true]
 $ wget https://developer.arm.com/-/media/Files/downloads/gnu-a/10.3-2021.07/binrel/[...]
     [...]gcc-arm-10.3-2021.07-x86_64-arm-none-linux-gnueabihf.tar.xz
 
@@ -85,7 +85,7 @@ $ ./bin/arm-none-linux-gnueabihf-gcc -o test test.c
 $ file test
 test: ELF 32-bit LSB executable, ARM, EABI5 version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-armhf.so.3, [...]
    for GNU/Linux 3.2.0, with debug_info, not stripped
-\end{verbatim}
+\end{Verbatim}
     }
   \end{block}
 \end{frame}
@@ -111,7 +111,7 @@ test: ELF 32-bit LSB executable, ARM, EABI5 version 1 (SYSV), dynamically linked
 
 \begin{frame}
   \frametitle{Toolchain building utilities (2)}
-  \begin{columns}
+  \begin{columns}[T]
   \column{0.6\textwidth}
     {\bf Crosstool-ng}
     \begin{itemize}
