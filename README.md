@@ -22,3 +22,9 @@ make TRAINER=heejun-roh full-system-programming-slides.pdf
 ```
 make full-system-programming-slides.pdf
 ```
+
+ - bootlin-training-materials과 LaTeX 템플릿 변경으로 인해 달라진 점
+   * documentclass 글로벌 옵션에서 t 옵션을 줘서 beamer의 각 frame이 본문을 윗쪽 정렬되게 함 (beamer의 default는 가운데 정렬임)
+     - 이로 인해 깨지는 슬라이드 (frame)은 \frame[t]로 옵션을 주어야 함
+   * beamer에서 frame을 여러 단 (column)으로 나누는 columns에서 큰 그림으로 시작되는 단이 있으면 다른 단의 텍스트가 그림의 아래끝에 맞춰서 나타나는 문제를 해결하기 위해서 columns[T] 옵션을 주어야 함 (columns의 default인 t 옵션이 가지는 한계로 인한 것임)
+   
