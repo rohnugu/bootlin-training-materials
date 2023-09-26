@@ -127,7 +127,7 @@ this happens. We will disassemble the code for this function to understand
 exactly where the issue happened.
 
 That is where we need a kernel compiled with \kconfig{CONFIG_DEBUG_INFO}
-as we did at the beginning of this lab. This way, the kernel vmlinux file is
+as we did in the initial lab. This way, the kernel vmlinux file is
 compiled with \code{-g} compiler flag, which adds a lot of debugging
 information (matching between source code lines and assembly for instance).
 
@@ -139,11 +139,11 @@ $ addr2line -e /home/$USER/debugging-labs/buildroot/output/build/linux-5.13/vmli
   -a <crash_address>
 \end{bashinput}
 
-We can even go a step further and use \code{gdb-multiarch} to open vmlinux and
+We can even go a step further and use the cross GDB to open vmlinux and
 locate the function and corresponding offset in assembly
 
 \begin{bashinput}
-$ gdb-multiarch /home/$USER/debugging-labs/buildroot/output/build/linux-5.13/vmlinux
+$ ${CROSS_COMPILE}gdb /home/$USER/debugging-labs/buildroot/output/build/linux-5.13/vmlinux
 (gdb) disassemble <function>
 \end{bashinput}
 
@@ -180,7 +180,7 @@ Use <ctrl>C to terminate program
 Note: the slave ports number will depend on the run.
 
 \textbf{Important: before using \code{/dev/pts/7} and \code{/dev/pts/8}, the
-picocom process that did opened \code{/dev/ttyACM0} must be closed!}
+picocom process that did open \code{/dev/ttyACM0} must be closed!}
 
 On the target, setup KGDB by setting the console to be used for that purpose in
 kgdboc module parameters:
@@ -190,19 +190,19 @@ $ echo ttySTM0 > /sys/module/kgdboc/parameters/kgdboc
 \end{bashinput}
 
 Once done, trigger the crash by running the watchdog command, the system will
-automatically wait for a debugger to be attached. Run \code{gdb-multiarch} and
+automatically wait for a debugger to be attached. Run the cross GDB and
 attach a gdb process to KGDB with the following command:
 
 \begin{bashinput}
-$ gdb-multiarch /home/$USER/debugging-labs/buildroot/output/build/linux-5.13/vmlinux
+$ ${CROSS_COMPILE}gdb ${HOME}/debugging-labs/buildroot/output/build/linux-5.13/vmlinux
 (gdb) target remote /dev/pts/8
 \end{bashinput}
 
 {\em TIP: in order to allow auto-loading of python scripts, you can add
 \code{set auto-load safe-path /} in your .gdbinit file}
 
-First of all, confirm the previous information that were obtain post crash using
-GDB. This will allow you to also display variables values. Starting from that
+First of all, confirm with GDB the information that were previously obtained
+post-crash. This will allow you to also display variables values. Starting from that
 point, we will add a breakpoint on the \code{watchdog_set_drvdata()} function.
 However, this function is called early in boot so we will need to actually
 attach with KGDB at boot time. To do so, we'll modify the bootargs to specify
@@ -219,13 +219,14 @@ Attach gdb client from your development host using the same command that was pre
 used:
 
 \begin{bashinput}
-$ gdb-multiarch /home/$USER/debugging-labs/buildroot/output/build/linux-5.13/vmlinux
+$ ${CROSS_COMPILE}gdb /home/$USER/debugging-labs/buildroot/output/build/linux-5.13/vmlinux
 (gdb) target remote /dev/pts/8
 \end{bashinput}
 
-Note: if you do not specify a file to be used, gdb-multiarch won't be able to
-detect the architecture automatically and the target command will fail. In that
-case, you can set the architecture using:
+Note: if you prefer using gdb-multiarch instead of the cross-gdb we have
+built and do not specify a file to be used, gdb-multiarch won't be able to
+detect the architecture automatically and the target command will fail. In
+that case, you can set the architecture using:
 
 \begin{bashinput}
 (gdb) set arch arm
@@ -234,7 +235,7 @@ case, you can set the architecture using:
 
 Before continuing the execution, add a breakpoint on
 \code{watchdog_set_drvdata()} using the \code{break} GDB command and then
-continue the execution using the continue \code{command}
+continue the execution using the \code{continue} command
 
 \begin{bashinput}
 (gdb) break watchdog_set_drvdata
@@ -255,8 +256,8 @@ Use it to set the variable with the previous value that was used before getting
 clobbered with NULL. Once done, continue the execution and verify that you fixed
 the problem using the \code{watchdog} command.
 
-{\em Note: In theory, we could have add a watchpoint to watch the address that
-was modified but the arm32 platforms do not provide watchpoints support with
+{\em Note: In theory, we could have added a watchpoint to watch the address that
+was modified but the ARM32 platform does not provide watchpoint support with
 KGDB.}
 
 \subsection{Debugging a module}
@@ -281,7 +282,7 @@ Then on the target, insert the module using insmod:
 \end{bashinput}
 
 We can now enter KGDB mode and attach the external gdb to it. We will do
-that using using the magic SySrq 'g' key. Before that, ensure the tty
+that using the magic SySrq 'g' key. Before that, ensure the tty
 device for gdb already set, or set it now:
 
 \begin{bashinput}
@@ -293,7 +294,7 @@ The kernel will then enter KGDB mode and will wait for a gdb connection. On the
 development platform, start it and attach to the target:
 
 \begin{bashinput}$
-$ gdb-multiarch /home/$USER/debugging-labs/buildroot/output/build/linux-5.13/vmlinux
+$ ${CROSS_COMPILE}gdb /home/$USER/debugging-labs/buildroot/output/build/linux-5.13/vmlinux
 (gdb) target remote /dev/pts/8
 \end{bashinput}
 
@@ -302,7 +303,7 @@ symbols from the module. You'll also need to pass a list of path that contains
 the external modules:
 
 \begin{bashinput}
-(gdb) lx-symbols /home/<user>/debugging-labs/nfsroot/root/kgdb_test/
+(gdb) lx-symbols /home/${USER}/debugging-labs/nfsroot/root/kgdb_test/
 loading vmlinux
 scanning for modules in /home/<user>/debugging-labs/nfsroot/root
 loading @0xbf000000: /home/<user>/debugging-labs/nfsroot/root/kgdb_test/kgdb_test.ko
@@ -353,8 +354,8 @@ directory:
 
 \begin{bashinput}
 $ mkdir /home/$USER/debugging-labs/nfsroot/root/kexec
-$ cp images/zImage /home/$USER/debugging-labs/nfsroot/root/kexec
-$ cp images/stm32mp157a-dk1.dtb /home/$USER/debugging-labs/nfsroot/root/kexec
+$ cp build_kexec/images/zImage /home/$USER/debugging-labs/nfsroot/root/kexec
+$ cp build_kexec/images/stm32mp157a-dk1.dtb /home/$USER/debugging-labs/nfsroot/root/kexec
 \end{bashinput}
 
 These files are now ready to be used from the target using kexec.
@@ -404,18 +405,17 @@ the 192.168.0.100 entry).
 $ ifconfig eth0 192.168.0.101
 \end{bashinput}
 
-{\textbf Note: ethernet setup might timeout due to some init issues after kexec
-boot so this commands needs to be run another time.}
+\textbf{Note:} ethernet setup might timeout due to some init issues after kexec
+boot so this commands needs to be run another time.
 
 \begin{bashinput}
 $ cd /home/$USER/debugging-labs/
 $ scp root@192.168.0.101:/proc/vmcore .
 \end{bashinput}
 
-Finally, we will be able to debug that kernel coredump using crash.
-Using gdb, you can load the \code{vmcore} file using \code{gdb-multiarch}:
+You can load the \code{vmcore} file using cross GDB:
 
 \begin{bashinput}
-$ gdb-multiarch /home/$USER/debugging-labs/buildroot/output/build/linux-5.13/vmlinux \
+$ ${CROSS_COMPILE}gdb /home/$USER/debugging-labs/buildroot/output/build/linux-5.13/vmlinux \
   vmcore
 \end{bashinput}

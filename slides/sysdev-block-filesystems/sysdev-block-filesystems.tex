@@ -190,7 +190,9 @@ major minor #blocks name
     \begin{itemize}
         \item Pronounced as "better F S", "butter F S" or "b-tree F S", since 2009.
         \item A modern filesystem with many advanced features: volumes, snapshots, transparent compression...
+			  Looks great for storage experts.
         \item Minimum partition size: 109MiB (only 32MiB of free space).
+        \item However, big module size and long initialization time (bad for boot time)
     \end{itemize}
     \url{https://en.wikipedia.org/wiki/Btrfs}
 \end{frame}
@@ -328,7 +330,7 @@ major minor #blocks name
 \subsection{Using block filesystems}
 
 \begin{frame}
-  \frametitle{Creating ext4 filesystems}
+  \frametitle{Creating filesystems}
   \begin{itemize}
   \item To create an empty ext4 filesystem on a block device or
     inside an already-existing image file
@@ -472,7 +474,9 @@ $ mount /dev/loop2p2 /mnt/rootfs
   \begin{itemize}
   \item Creating further partitions on your SD card
   \item Booting a system with a mix of filesystems: {\em SquashFS} for
-    the root filesystem, {\em ext4} for configuration and user data, and {\em
-      tmpfs} for temporary system files.
+    the root filesystem, {\em ext4} for data, and {\em
+    tmpfs} for temporary system files.
+  \item Loading everything from the SD card, including
+    the kernel and device tree.
   \end{itemize}
 }
