@@ -442,9 +442,12 @@ root          11       2 [rcu_tasks_kthread]          TS
   \begin{itemize}
     \item Allocating memory in the kernel can be done using multiple functions:
     \begin{itemize}
-      \item \mint{c}+void *kmalloc(size_t size, gfp_t gfp_mask);+
-      \item \mint{c}+void *kzalloc(size_t size, gfp_t gfp_mask);+
-      \item \mint{c}+unsigned long __get_free_pages(gfp_t gfp_mask, unsigned int order)+
+       \item \code{void *kmalloc(size_t size, gfp_t gfp_mask);}
+       \item \code{void *kzalloc(size_t size, gfp_t gfp_mask);}
+       \item \code{unsigned long __get_free_pages(gfp_t gfp_mask, unsigned int order)}
+%      \item \mint{c}+void *kmalloc(size_t size, gfp_t gfp_mask);+
+%      \item \mint{c}+void *kzalloc(size_t size, gfp_t gfp_mask);+
+%      \item \mint{c}+unsigned long __get_free_pages(gfp_t gfp_mask, unsigned int order)+
     \end{itemize}
     \item All allocation functions take a \code{gfp_mask} parameter which allows to
           designate the kind of memory that is needed.
