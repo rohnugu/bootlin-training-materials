@@ -44,7 +44,16 @@ SYSTEM_PROGRAMMING_SLIDES = \
 		sysdev-build-systems \
 		sysdev-licensing \
 		sysdev-software-stacks \
-		sysdev-application-development \
+		debugging-principles \
+		debugging-linux-application-stack \
+		debugging-common-tools \
+		debugging-application-debugging \
+		debugging-application-tracing \
+		debugging-memory-issues \
+		debugging-application-profiling \
+		debugging-system-wide-profiling \
+		debugging-kernel-debugging \
+		debugging-going-further \
 		sysdev-references \
 		last-slides \
 		sysdev-extra-slides
@@ -60,4 +69,12 @@ SYSTEM_PROGRAMMING_LABS   = setup \
 		sysdev-thirdparty-beagleplay \
 		sysdev-buildroot \
 		sysdev-system-integration \
-		sysdev-application-development-and-debugging
+		sysdev-application-development-and-debugging \
+		debugging-setup \
+		debugging-system-status \
+		debugging-application-crash \
+		debugging-application-tracing \
+		debugging-memory-issues \
+		debugging-application-profiling \
+		debugging-system-wide-profiling \
+		debugging-kernel-debugging

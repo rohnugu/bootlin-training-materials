@@ -40,6 +40,8 @@ PDFLATEX_OPT = -shell-escape -file-line-error -halt-on-error
 # hjroh
 STYLESHEET = common/beamerthemeDNSLab.sty
 #TRAINER = heejun-roh
+SESSION_URL = https://dnslab.korea.ac.kr/
+
 
 #
 # === Picture lookup ===
@@ -191,7 +193,7 @@ LABS_PICTURES = $(call PICTURES,$(foreach s,$(LABS_CHAPTERS),labs/$(s))) $(COMMO
 # Check for all labs .tex file to exist
 $(foreach file,$(LABS_TEX),$(if $(wildcard $(file)),,$(error Missing file $(file) !)))
 
-%-labs.pdf: common/labs.sty $(VARS) $(LABS_TEX) $(LABS_PICTURES) $(OUTDIR)/last-update.tex
+%-labs.pdf: common/labs-DNSLab.sty $(VARS) $(LABS_TEX) $(LABS_PICTURES) $(OUTDIR)/last-update.tex
 	@mkdir -p $(OUTDIR)
 # We generate a .tex file with \input{} directives (instead of just
 # concatenating all files) so that when there is an error, we are
