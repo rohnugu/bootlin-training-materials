@@ -692,7 +692,7 @@ $ file /tmp/target/usr/bin/ipcalc
 \end{frame}
 
 \begin{frame}{Distinction between {\em prefix} and {\em DESTDIR}}
-  \begin{columns}
+  \begin{columns}[T]
     \column{0.5\textwidth}
     \begin{itemize}
     \item There is often a confusion between {\em prefix} and {\em
@@ -733,7 +733,7 @@ $ file /tmp/target/usr/bin/ipcalc
 
 \begin{frame}[fragile]{pkg-config example for native compilation}
   \begin{block}{}
-    {\scriptsize
+    {\tiny
 \begin{verbatim}
 $ pkg-config --list-all
 openssl                        OpenSSL - Secure Sockets Layer and cryptography libraries and tools
@@ -756,7 +756,7 @@ $ pkg-config --cflags --libs cairo-script
 
 \begin{frame}[fragile]{pkg-config example for cross-compilation}
   \begin{block}{Use \code{PKG_CONFIG_LIBDIR}}
-    {\scriptsize
+    {\tiny
 \begin{verbatim}
 $ export PKG_CONFIG_LIBDIR=/tmp/staging/usr/lib/pkgconfig
 $ pkg-config --list-all
@@ -773,7 +773,7 @@ $ pkg-config --cflags --libs openssl
   \code{PKG_CONFIG_SYSROOT_DIR}.
 
   \begin{block}{Use \code{PKG_CONFIG_SYSROOT_DIR}}
-    {\scriptsize
+    {\tiny
 \begin{verbatim}
 $ export PKG_CONFIG_SYSROOT_DIR=/tmp/staging/
 $ pkg-config --cflags --libs openssl

@@ -972,7 +972,7 @@ b.attach_kprobe(event=b.get_syscall_fnname("clone"), fn_name="hello")
     \item Counting all syscalls per process:
   \end{itemize}
   \begin{block}{}
-    \begin{minted}[fontsize=\small]{console}
+    \begin{minted}[fontsize=\tiny]{console}
 $ sudo bpftrace -e 'tracepoint:raw_syscalls:sys_enter { @[comm] = count(); }'
 Attaching 1 probe...
 ^C
@@ -1001,7 +1001,7 @@ Attaching 1 probe...
 
 \begin{frame}
   \frametitle{{\em LTTng} (1/2)}
-  \begin{columns}
+  \begin{columns}[T]
     \column{0.65\textwidth}
     \begin{itemize}
       \item LTTng is an open source tracing framework for Linux maintained by

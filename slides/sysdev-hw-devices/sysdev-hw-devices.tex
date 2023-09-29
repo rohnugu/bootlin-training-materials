@@ -97,7 +97,7 @@
 \end{frame}
 
 \begin{frame}{Accessing devices directly from user-space: GPIO example}
-  \begin{columns}
+  \begin{columns}[T]
     \column{0.3\textwidth} {\small This diagram shows what's not
       recommended to do $\rightarrow$ for a GPIO controller, a kernel driver
       is preferred}
@@ -531,7 +531,7 @@ lrwxrwxrwx    subsystem -> ../../../../../../bus/i2c
 \subsection{Using kernel modules}
 
 \begin{frame}{Why kernel modules?}
-  \begin{columns}
+  \begin{columns}[T]
     \column{0.7\textwidth}
     \begin{itemize}
     \item Primary reason: keep the kernel image minimal, and load
@@ -691,7 +691,7 @@ ip6_udp_tunnel         16384  1 wireguard
   \end{itemize}
 
   \begin{block}{}
-    {\footnotesize
+    {\tiny
 \begin{verbatim}
 # modinfo fat_test | grep depends
 depends:        kunit,fat
@@ -790,7 +790,7 @@ fat                    86016  1 vfat
 \end{frame}
 
 \begin{frame}{Device Tree: from source to blob}
-  \begin{columns}
+  \begin{columns}[T]
     \column{0.7\textwidth}
     \begin{itemize}
     \item A tree data structure describing the hardware is written by a
@@ -814,7 +814,7 @@ fat                    86016  1 vfat
 \end{frame}
 
 \begin{frame}[fragile]{dtc example}
-  \footnotesize
+  \tiny
   \begin{columns}[t]
     \column{0.5\textwidth}
     \begin{block}{}
@@ -861,7 +861,7 @@ $ dtc -I dtb -O dts foo.dtb
 \end{frame}
 
 \begin{frame}{Device Tree: using the blob}
-  \begin{columns}
+  \begin{columns}[T]
     \column{0.6\textwidth}
     \begin{itemize}
     \item Can be {\bf linked directly} inside a bootloader binary
@@ -907,7 +907,7 @@ $ dtc -I dtb -O dts foo.dtb
 \end{frame}
 
 \begin{frame}{Device Tree base syntax}
-  \begin{columns}
+  \begin{columns}[T]
     \column{0.5\textwidth}
     \begin{itemize}
     \item Tree of {\bf nodes}
@@ -926,7 +926,7 @@ $ dtc -I dtb -O dts foo.dtb
 \end{frame}
 
 \begin{frame}[fragile]{DT overall structure: simplified example}
-  \begin{columns}
+  \begin{columns}[T]
     \column{0.6\textwidth}
     \begin{onlyenv}<1>
       \begin{block}{}
@@ -1240,7 +1240,7 @@ $ dtc -I dtb -O dts foo.dtb
 \end{frame}
 
 \begin{frame}{Device Tree specifications}
-  \begin{columns}
+  \begin{columns}[T]
     \column{0.7\textwidth}
     \begin{itemize}
     \item How to write the correct nodes/properties to describe a
@@ -1463,7 +1463,7 @@ examples:
 \end{frame}
 
 \begin{frame}{{\tt compatible} property and Linux kernel drivers}
-  \begin{columns}
+  \begin{columns}[T]
     \column{0.6\textwidth}
     \begin{itemize}
     \item Linux identifies as {\bf platform devices}:
@@ -1681,7 +1681,7 @@ spi3: spi@4000c000 {
 \end{frame}
 
 \begin{frame}{Pin-muxing description}
-  \begin{columns}
+  \begin{columns}[T]
     \column{0.5\textwidth}
     \begin{itemize}
     \item Most modern SoCs, including the STM32MP1, have more features
@@ -1874,7 +1874,7 @@ dtb-$(CONFIG_ARCH_STM32) += \
   \end{columns}
 \end{frame}
 
-\begin{frame}[fragile]{Example: connect I2C temperature, humidity and pressure sensor}
+\begin{frame}[fragile]{Example: connect I2C temp, humidity and pressure sensor}
   \begin{columns}
     \column{0.5\textwidth}
     \begin{block}{stm32mp157a-dk1-custom.dts}

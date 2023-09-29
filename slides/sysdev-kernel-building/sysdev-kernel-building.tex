@@ -216,7 +216,7 @@
     \column{0.4\textwidth}
     \begin{itemize}
     \item \code{depends on} dependency:
-\scriptsize
+\tiny
 \begin{verbatim}
 config B
     depends on A
@@ -229,7 +229,7 @@ config B
     \column{0.6\textwidth}
     \begin{itemize}
     \item \code{select} dependency:
-\scriptsize
+\tiny
 \begin{verbatim}
 config A
     select B
@@ -244,7 +244,7 @@ config A
     \end{itemize}
   \end{columns}
   \vfill
-  \scriptsize
+  \tiny
 \begin{verbatim}
 config SPI_ATH79
         tristate "Atheros AR71XX/AR724X/AR913X SPI controller driver"
@@ -272,7 +272,7 @@ config SPI_ATH79
       \end{itemize}
     \end{itemize}
     \column{0.35\textwidth}
-    \footnotesize
+    \tiny
 \begin{verbatim}
 #
 # CD-ROM/DVD Filesystems
@@ -297,7 +297,7 @@ CONFIG_FAT_DEFAULT_CODEPAGE=437
 
 \begin{frame}
   \frametitle{xconfig}
-  \begin{columns}
+  \begin{columns}[T]
     \column{0.5\textwidth}
     \code{make xconfig}
     \begin{itemize}
@@ -314,7 +314,7 @@ CONFIG_FAT_DEFAULT_CODEPAGE=437
 
 \begin{frame}
   \frametitle{menuconfig}
-  \begin{columns}
+  \begin{columns}[T]
     \column{0.5\textwidth}
     \code{make menuconfig}
     \begin{itemize}
@@ -369,7 +369,7 @@ CONFIG_FAT_DEFAULT_CODEPAGE=437
 
 \begin{frame}[fragile]
   \frametitle{Kernel compilation}
-  \begin{columns}
+  \begin{columns}[T]
   \column{0.7\textwidth}
   \code{make}
   \begin{itemize}
@@ -496,13 +496,13 @@ CONFIG_FAT_DEFAULT_CODEPAGE=437
 
 \begin{frame}[fragile]
   \frametitle{Kernel cleanup targets}
-  \begin{columns}
+  \begin{columns}[T]
     \column{0.8\textwidth}
     \small
     \begin{itemize}
     \item From \code{make help}:
     \begin{block}{}
-    \begin{minted}[fontsize=\scriptsize]{console}
+    \begin{minted}[fontsize=\tiny]{console}
 Cleaning targets:
   clean           - Remove most generated files but keep the config and
                     enough build support to build external modules

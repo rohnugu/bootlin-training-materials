@@ -125,7 +125,7 @@ major minor #blocks name
 
 \begin{frame}
   \frametitle{Journaled filesystems}
-  \begin{columns}
+  \begin{columns}[T]
     \column{0.6\textwidth}
     \begin{itemize}
     \item Unlike simpler filesystems (\code{ext2}, \code{vfat}...),
@@ -142,7 +142,7 @@ major minor #blocks name
 
 \begin{frame}
   \frametitle{Filesystem recovery after crashes}
-  \begin{columns}
+  \begin{columns}[T]
     \column{0.4\textwidth}
     \includegraphics[width=\textwidth]{slides/sysdev-block-filesystems/journal-recovery.pdf}
     \column{0.6\textwidth}
@@ -427,7 +427,7 @@ $ mount /dev/loop2p2 /mnt/rootfs
 
 \begin{frame}
   \frametitle{Mixing read-only and read-write filesystems}
-  \begin{columns}
+  \begin{columns}[T]
     \column{0.8\textwidth}
     Good idea to split your block storage into:
     \begin{itemize}

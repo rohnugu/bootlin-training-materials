@@ -91,7 +91,7 @@
 \end{frame}
 
 \begin{frame}{Buildroot: introduction}
-  \begin{columns}
+  \begin{columns}[T]
     \column{0.2\textwidth}
     \includegraphics[height=\textwidth,angle=90]{slides/sysdev-build-systems/buildroot-logo.png}
     \column{0.8\textwidth}
@@ -120,7 +120,7 @@
 \end{frame}
 
 \begin{frame}{Buildroot: configuration and build}
-  \begin{columns}
+  \begin{columns}[T]
     \column{0.6\textwidth}
     \begin{itemize}
     \item Configuration takes place through a \code{*config} interface similar to the
@@ -248,7 +248,7 @@ $(eval $(meson-package))
 \end{frame}
 
 \begin{frame}{Yocto Project / OpenEmbedded}
-  \begin{columns}
+  \begin{columns}[T]
     \column{0.6\textwidth}
   \begin{itemize}
   \item OpenEmbedded
@@ -392,7 +392,7 @@ $(eval $(meson-package))
 
 \begin{frame}[fragile]{Yocto quick start: STM32MP1 example}
   \begin{block}{Download {\em bitbake} and layers}
-    {\footnotesize
+    {\tiny
 \begin{verbatim}
   $ git clone git://git.openembedded.org/openembedded-core -b kirkstone
   $ git clone git://git.openembedded.org/meta-openembedded -b kirkstone
@@ -406,7 +406,7 @@ $(eval $(meson-package))
   we are fetching each layer manually.
 
   \begin{block}{Enter the build environment}
-    {\footnotesize
+    {\tiny
 \begin{verbatim}
 $ source openembedded-core/oe-init-build-env
 \end{verbatim}

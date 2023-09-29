@@ -86,7 +86,7 @@
 
 \begin{frame}
   \frametitle{Userspace/Kernel memory layout}
-  \begin{columns}
+  \begin{columns}[T]
     \column{0.55\textwidth}
     \begin{itemize}
       \item Each process has its own set of virtual memory areas (\code{mm}
@@ -115,7 +115,7 @@
 
 \begin{frame}[fragile]
   \frametitle{Kernel memory map}
-  \begin{columns}
+  \begin{columns}[T]
     \column{0.55\textwidth}
     \begin{itemize}
       \item The kernel has it own memory mapping.
@@ -492,7 +492,7 @@ root          11       2 [rcu_tasks_kthread]          TS
 
 \begin{frame}[fragile]
   \frametitle{Debugging with ELF files}
-  \begin{columns}
+  \begin{columns}[T]
     \column{0.75\textwidth}
     \begin{itemize}
       \item GDB uses ELF files since they are containing the debugging information
@@ -601,7 +601,7 @@ root          11       2 [rcu_tasks_kthread]          TS
   \end{itemize}
 
   \begin{block}{}
-    \begin{minted}[fontsize=\small]{C}
+    \begin{minted}[fontsize=\footnotesize]{C}
 long ptrace(enum __ptrace_request request, pid_t pid, void *addr, void *data);
     \end{minted}
   \end{block}

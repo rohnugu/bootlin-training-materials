@@ -231,7 +231,7 @@ libncursesw.so.6 => /usr/lib/libncursesw.so.6 (0x00007fa2d288e000)
     \item Display all processes in a friendly way:
   \end{itemize}
   \begin{block}{}
-    \begin{minted}[fontsize=\footnotesize]{console}
+    \begin{minted}[fontsize=\tiny]{console}
 $ ps aux
 USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
 root           1  0.0  0.0 168864 12800 ?        Ss   09:08   0:00 /sbin/init
@@ -261,7 +261,7 @@ vnstat       987  0.0  0.0   5516  3696 ?        Ss   09:08   0:00 /usr/sbin/vns
     \end{itemize}
   \end{itemize}
   \begin{block}{}
-    \begin{minted}[fontsize=\footnotesize]{console}
+    \begin{minted}[fontsize=\tiny]{console}
 $ top
 top - 18:38:11 up  9:29,  1 user,  load average: 2.84, 2.74, 2.02
 Tasks: 371 total,   1 running, 370 sleeping,   0 stopped,   0 zombie
@@ -290,7 +290,7 @@ MiB Swap:  15259.0 total,  15238.7 free,     20.2 used.   7742.3 avail Mem
     \end{itemize}
   \end{itemize}
   \begin{block}{}
-    \begin{minted}[fontsize=\footnotesize]{console}
+    \begin{minted}[fontsize=\tiny]{console}
 $ free -h
                total        used        free      shared  buff/cache   available
 Mem:            15Gi       7.5Gi       1.4Gi       192Mi       6.6Gi       7.5Gi
@@ -308,7 +308,7 @@ Swap:           14Gi        20Mi        14Gi
     \item Can be used to gather data at periodic interval using \code{vmstat <interval> <number>}
   \end{itemize}
   \begin{block}{}
-    \begin{minted}[fontsize=\footnotesize]{console}
+    \begin{minted}[fontsize=\tiny]{console}
 $ vmstat 1 6
 procs -----------memory----------   ---swap--  -----io---- -system-- ------cpu-----
 r  b   swpd   free   buff  cache     si   so    bi    bo    in   cs  us sy id wa st
@@ -327,7 +327,7 @@ r  b   swpd   free   buff  cache     si   so    bi    bo    in   cs  us sy id wa
     \item Useful to detect unbalance CPU workloads, bad IRQ affinity, etc.
   \end{itemize}
   \begin{block}{}
-    \begin{minted}[fontsize=\scriptsize]{console}
+    \begin{minted}[fontsize=\tiny]{console}
 $ mpstat -P ALL 
 Linux 6.0.0-1-amd64 (fixe)      19/10/2022      _x86_64_        (4 CPU)
 
@@ -350,7 +350,7 @@ Linux 6.0.0-1-amd64 (fixe)      19/10/2022      _x86_64_        (4 CPU)
     \item Useful to see if a device is overloaded by IOs.
   \end{itemize}
   \begin{block}{}
-    \begin{minted}[fontsize=\footnotesize]{console}
+    \begin{minted}[fontsize=\tiny]{console}
 $ iostat 
 Linux 5.19.0-2-amd64 (fixe)     11/10/2022      _x86_64_        (12 CPU)
 
@@ -381,7 +381,7 @@ sdb      104,42     274,55    2126,64       0,00  1280853  9921488        0
     \end{itemize}
   \end{itemize}
   \begin{block}{}
-    \begin{minted}[fontsize=\small]{console}
+    \begin{minted}[fontsize=\tiny]{console}
 # iotop
 Total DISK READ:        20.61 K/s | Total DISK WRITE:        51.52 K/s
 Current DISK READ:      20.61 K/s | Current DISK WRITE:      24.04 K/s
