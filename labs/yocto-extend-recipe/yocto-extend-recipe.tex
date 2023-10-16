@@ -19,7 +19,7 @@ extend some configuration variables of the original recipe.
 
 Try to create an appended recipe with the help of the online Yocto
 Project development documentation. You can find it at
-\url{https://docs.yoctoproject.org/dev-manual/index.html}. We here
+\url{https://docs.yoctoproject.org/dev-manual/layers.html}. We here
 aim to extend the \ifdefstring{\labboard}{stm32mp1}{\code{linux-stm32mp}}
 {\code{linux-ti-staging}} kernel recipe.
 
@@ -67,6 +67,7 @@ alongside the patches. This file contains the kernel configuration.
 \if\defstring{\labboard}{stm32mp1}
 Add \code{KERNEL_DEFCONFIG = ""} and \code{KERNEL_EXTERNAL_DEFCONFIG =
 "defconfig"} so it is used by the \code{linux-stm32mp} recipe.
+\footnote{These settings are specific to the \code{linux-stm32mp} recipe!}
 \else
 It is handled automatically in the \code{linux-ti-staging} original recipe.
 \fi

@@ -17,9 +17,12 @@
       compile, install and generate binary packages.
     \item It also defines what build or runtime dependencies are
       required.
-    \item Recipes are parsed by the BitBake build engine.
+    \item Recipes are parsed by the \code{bitbake} build engine.
     \item The format of a recipe file name is
       \code{<application-name>_<version>.bb}
+    \item The output product of a recipe is a set of binary packages (rpm,
+      deb or ipk): typically \code{<recipename>}, \code{<recipename>-doc},
+      \code{<recipename>-dbg} etc.
   \end{itemize}
 \end{frame}
 
@@ -41,17 +44,16 @@
     \item To make it easier to write a recipe, some variables are
       automatically available:
       \begin{description}
-        \item[PN] package name, as specified in the recipe file name
-        \item[BPN] \code{PN} with prefixes and suffixes removed such
-          as \code{nativesdk-}, or \code{-native}
-        \item[PV] package version, as specified in the recipe file
-          name
+        \item[BPN] recipe name, extracted from the recipe file name
+        \item[PN] \code{BPN} potentially with prefixes or suffixes added
+          such as \code{nativesdk-}, or \code{-native}
+        \item[PV] package version, extracted from the the recipe file name
         \item[BP] defined as \code{${BPN}-${PV}}
       \end{description}
     \item The recipe name and version usually match the upstream ones.
     \item When using the recipe \code{bash_5.1.bb}:
       \begin{itemize}
-        \item \code{${PN} = "bash"}
+        \item \code{${BPN} = "bash"}
         \item \code{${PV} = "5.1"}
       \end{itemize}
   \end{itemize}
@@ -189,7 +191,7 @@ SRC_URI[patch.md5sum]   = "b184acf9eb39df794ffd..."
       variable
     \item \code{FILESPATH} is a colon-separated list of paths to look for
       files
-    \item The order matters: when a file is found in a paths, the search
+    \item The order matters: when a file is found in a path, the search
       ends
   \end{itemize}
 \end{frame}
@@ -278,7 +280,7 @@ recipes-kernel/
 \begin{frame}
   \frametitle{The source locations: tarballs}
   \begin{itemize}
-    \item When extracting a tarball, BitBake expects to find the
+    \item When extracting a tarball, \code{bitbake} expects to find the
       extracted files in a directory named
       \code{<application>-<version>}. This is controlled by the
       \code{S} variable. If the directory has another name, you must
@@ -336,7 +338,7 @@ LIC_FILES_CHKSUM =  \
   \begin{itemize}
     \item Sometimes a recipe have dependencies on specific versions
       of another recipe.
-    \item BitBake allows to reflect this by using:
+    \item \code{bitbake} allows to reflect this by using:
     \begin{itemize}
       \item \code{DEPENDS = "recipe-b (>= 1.2)"}
       \item \code{RDEPENDS:${PN} = "recipe-b (>= 1.2)"}
@@ -376,7 +378,7 @@ LIC_FILES_CHKSUM =  \
       \begin{description}
         \item[WORKDIR] the recipe's working directory
         \item[S] The directory where the source code is extracted
-        \item[B] The directory where bitbake places the objects
+        \item[B] The directory where \code{bitbake} places the objects
           generated during the build
         \item[D] The destination directory (root directory of where
           the files are installed, before creating the image).
