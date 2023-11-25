@@ -85,7 +85,7 @@
 
 \begin{frame}
   \frametitle{C/C++ compiler}
-  \begin{columns}
+  \begin{columns}[T]
     \column{0.8\textwidth}
     \begin{itemize}
     \item GCC: GNU Compiler Collection, the famous free software compiler
@@ -120,7 +120,7 @@
     \item The kernel headers are extracted from the kernel sources using
       the \code{headers_install} kernel Makefile target.
     \end{itemize}
-    \column[T]{0.3\textwidth}
+    \column{0.3\textwidth}
     \includegraphics[width=\textwidth]{slides/sysdev-toolchains-definition/kernel-headers.pdf}
   \end{columns}
 \end{frame}
@@ -191,10 +191,8 @@ struct stat {
 \end{frame}
 
 \begin{frame}
-  \frametitle{C library}
-  \begin{columns}[T]
   \frametitle{C standard library}
-  \begin{columns}
+  \begin{columns}[T]
     \column{0.6\textwidth}
     \begin{itemize}
     \item The C standard library is an essential component of a Linux
