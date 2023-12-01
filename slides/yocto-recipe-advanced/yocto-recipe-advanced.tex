@@ -43,17 +43,17 @@
       \item {\usebeamercolor[fg]{code} \path{example_0.%.bbappend}} applies
         to \code{example_0.1.bb} and \code{example_0.2.bb} but not
         \code{example_1.0.bb}
-        \item The \code{\%} works only just before the \code{.bbappend}
+        \item The {\usebeamercolor[fg]{code} \path{%}} works only just before the \code{.bbappend}
           suffix
     \end{itemize}
     \item Append files should be {\bf version specific}. If the recipe
       is updated to a newer version, the append files must also be
       updated.
     \item If adding new files, the path to their directory must
-          be prepended to the \code{FILESEXTRAPATHS} variable.
+          be prepended to the \yoctovar{FILESEXTRAPATHS} variable.
     \begin{itemize}
       \item Files are looked up in paths referenced in
-            \code{FILESEXTRAPATHS}, from left to right.
+            \yoctovar{FILESEXTRAPATHS}, from left to right.
       \item Prepending a path makes sure it has priority over the recipe's
             one. This allows to override recipes' files.
     \end{itemize}
@@ -94,7 +94,7 @@ do_install:append() {
     \item \code{bitbake} allows to use virtual names instead of the actual
           package name. We saw a use case with \emph{package
           variants}.
-    \item The virtual name is specified through the \code{PROVIDES}
+    \item The virtual name is specified through the \yoctovar{PROVIDES}
           variable.
     \item Several recipes can provide the same virtual name. Only one
           will be built and installed into the generated image.
@@ -139,7 +139,7 @@ do_install:append() {
       \item \code{useradd.bbclass}
       \item \dots
     \end{itemize}
-  \item Starting with Yocto Langdale, most classes are split into
+  \item Starting with Yocto Langdale (4.1), most classes are split into
     scope-specific subdirectories: \code{meta/classes-recipe/},
     \code{meta/classes-global/}
   \end{itemize}
@@ -148,7 +148,7 @@ do_install:append() {
 \begin{frame}
   \frametitle{The base class}
   \begin{itemize}
-    \item Every recipe inherits the base class automatically.
+    \item Every recipe inherits the \code{base} class automatically.
     \item Defines basic common tasks with a default implementation:
       \begin{itemize}
         \item \code{fetch}, \code{unpack}, \code{patch}
@@ -158,7 +158,7 @@ do_install:append() {
     \item Automatically applies patch files listed in \code{SRC_URI}
     \item Defines mirrors: \code{SOURCEFORGE_MIRROR},
       \code{DEBIAN_MIRROR}, \code{GNU_MIRROR}, \code{KERNELORG_MIRROR}\dots
-    \item Defines \code{oe_runmake}, using \code{EXTRA_OEMAKE} to use
+    \item Defines \code{oe_runmake}, using \yoctovar{EXTRA_OEMAKE} to use
       custom arguments.
   \end{itemize}
 \end{frame}
@@ -169,7 +169,7 @@ do_install:append() {
     \item Used to build Linux kernels.
     \item Defines tasks to configure, compile and install a kernel and
           its modules.
-    \item Automatically applies a \code{defconfig} listed in \code{SRC_URI}
+    \item Automatically applies a \code{defconfig} listed in \yoctovar{SRC_URI}
       \begin{block}{}
         \begin{minted}{sh}
 SRC_URI += "file://defconfig"
@@ -182,9 +182,9 @@ SRC_URI += "file://defconfig"
           \code{virtual/kernel}.
     \item Configuration variables are available:
     \begin{itemize}
-      \item \code{KERNEL_IMAGETYPE}, defaults to \code{zImage}
-      \item \code{KERNEL_EXTRA_ARGS}
-      \item \code{INITRAMFS_IMAGE}
+      \item \yoctovar{KERNEL_IMAGETYPE}, defaults to \code{zImage}
+      \item \yoctovar{KERNEL_EXTRA_ARGS}
+      \item \yoctovar{INITRAMFS_IMAGE}
     \end{itemize}
   \end{itemize}
 \end{frame}
@@ -202,9 +202,9 @@ SRC_URI += "file://defconfig"
       \item \code{do_install}: runs \code{make install}
     \end{itemize}
     \item Extra configuration parameters can be passed with
-          \code{EXTRA_OECONF}.
+          \yoctovar{EXTRA_OECONF}.
     \item Compilation flags can be added thanks to the
-          \code{EXTRA_OEMAKE} variable.
+          \yoctovar{EXTRA_OEMAKE} variable.
   \end{itemize}
 \end{frame}
 
@@ -234,16 +234,16 @@ inherit autotools
     \item This class helps to add users to the resulting image.
     \item Adding custom users is required by many services to avoid
           running them as root.
-    \item \code{USERADD_PACKAGES} must be defined when the \code{useradd} class
+    \item \yoctovar{USERADD_PACKAGES} must be defined when the \code{useradd} class
           is inherited. It defines the individual packages produced by the
           recipe that need users or groups to be added.
     \item Users and groups will be created before the packages using
           it perform their \code{do_install}.
     \item At least one of the two following variables must be set:
     \begin{itemize}
-      \item \code{USERADD_PARAM}: parameters to pass to
+      \item \yoctovar{USERADD_PARAM}: parameters to pass to
             \code{useradd}.
-      \item \code{GROUPADD_PARAM}: parameters to pass to
+      \item \yoctovar{GROUPADD_PARAM}: parameters to pass to
             \code{groupadd}.
     \end{itemize}
   \end{itemize}
@@ -287,7 +287,7 @@ do_install() {
       \begin{itemize}
         \item Disables \code{do_configure} and \code{do_compile}
         \item Provides a default \code{do_install} that copies whatever is
-          in \code{S} (useful e.g. when extracting a pre-built RPM/DEB)
+          in \yoctovar{S} (useful e.g. when extracting a pre-built RPM/DEB)
       \end{itemize}
     \item Additionally you probably need:
       \begin{itemize}
@@ -303,7 +303,7 @@ do_install() {
   \frametitle{Locate files in the build system}
   \begin{itemize}
     \item Metadata can be shared using included files.
-    \item \code{BitBake} uses the \code{BBPATH} to find the files to
+    \item \code{BitBake} uses the \yoctovar{BBPATH} to find the files to
       be included. It also looks into the current directory.
     \item Three keywords can be used to include files from recipes,
       classes or other configuration files:
@@ -323,10 +323,10 @@ do_install() {
     \item To inherit the functionalities of the \code{kernel} class,
       use: \code{inherit kernel}
     \item \code{inherit} looks for files ending in \code{.bbclass}, in
-      \code{classes} directories found in \code{BBPATH}.
+      \code{classes} directories found in \yoctovar{BBPATH}.
     \item It is possible to include a class conditionally using a
       variable: \code{inherit ${FOO}}
-    \item Inheriting in configuration files is based on the \code{INHERIT}
+    \item Inheriting in configuration files is based on the \yoctovar{INHERIT}
       variable instead:
       \begin{itemize}
         \item \code{INHERIT += "rm_work"}
@@ -342,7 +342,7 @@ do_install() {
       to insert the content of another file at that location.
     \item If the path specified on the \code{include} (or
       \code{require}) path is relative, \code{bitbake} will insert the first
-      file found in \code{BBPATH}.
+      file found in \yoctovar{BBPATH}.
     \item \code{include} does not produce an error when a file cannot
       be found, whereas \code{require} raises a parsing error.
     \item To include a local file: \code{require ninvaders.inc}
@@ -416,10 +416,10 @@ BUILDHISTORY_COMMIT = "1"
     \item \code{bitbake} will look for files to retrieve at the following
       locations, in order:
       \begin{enumerate}
-        \item \code{DL_DIR} (the local download directory).
-        \item The \code{PREMIRRORS} locations.
-        \item The upstream source, as defined in \code{SRC_URI}.
-        \item The \code{MIRRORS} locations.
+        \item \yoctovar{DL_DIR} (the local download directory).
+        \item The \yoctovar{PREMIRRORS} locations.
+        \item The upstream source, as defined in \yoctovar{SRC_URI}.
+        \item The \yoctovar{MIRRORS} locations.
       \end{enumerate}
     \item If all the mirrors fail, the build will fail.
   \end{itemize}
@@ -447,7 +447,7 @@ ftp://.*/.*     http://sources.openembedded.org/ \
 \begin{frame}[fragile]
   \frametitle{Configuring the premirrors}
   \begin{itemize}
-    \item It is easy to add a custom mirror to the \code{PREMIRRORS} by
+    \item It is easy to add a custom mirror to the \yoctovar{PREMIRRORS} by
       using the \code{own-mirrors} class (only one URL supported):
   \end{itemize}
   \begin{block}{}
@@ -458,7 +458,7 @@ SOURCE_MIRROR_URL = "http://example.com/my-mirror"
   \end{block}
   \begin{itemize}
     \item For a more complex setup,  prepend custom mirrors to the
-      \code{PREMIRRORS} variable:
+      \yoctovar{PREMIRRORS} variable:
   \end{itemize}
   \begin{block}{}
     \begin{minted}{sh}
@@ -479,8 +479,8 @@ PREMIRRORS:prepend = "\
         \item Except for sources fetched via an SCM a tarball of the
           repository is needed, not the bare git repository that is created
           by default
-        \item You can use \code{BB_GENERATE_MIRROR_TARBALLS = "1"} to
-          generate tarballs of the git repositories in \code{DL_DIR}
+        \item You can use \yoctovar{BB_GENERATE_MIRROR_TARBALLS = "1"} to
+          generate tarballs of the git repositories in \yoctovar{DL_DIR}
       \end{itemize}
   \end{itemize}
 \end{frame}
@@ -488,12 +488,12 @@ PREMIRRORS:prepend = "\
 \begin{frame}{Forbidding network access}
   \begin{itemize}
     \item You can also completely disable network access using
-      \code{BB_NO_NETWORK = "1"}
+      \yoctovar{BB_NO_NETWORK = "1"}
       \begin{itemize}
       \item To download all the sources before disabling network access use
         \code{bitbake --runall=fetch core-image-minimal}
       \end{itemize}
     \item Or restrict \code{bitbake} to only download files from the
-      \code{PREMIRRORS}, using \code{BB_FETCH_PREMIRRORONLY = "1"}
+      \yoctovar{PREMIRRORS}, using \yoctovar{BB_FETCH_PREMIRRORONLY = "1"}
   \end{itemize}
 \end{frame}
