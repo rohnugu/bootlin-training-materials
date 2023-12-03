@@ -44,6 +44,10 @@ SYSTEM_PROGRAMMING_SLIDES = \
 		sysdev-build-systems \
 		sysdev-licensing \
 		sysdev-software-stacks \
+		sysdev-application-development \
+		sysdev-references \
+		last-slides \
+		sysdev-extra-slides \
 		debugging-principles \
 		debugging-linux-application-stack \
 		debugging-common-tools \
@@ -54,9 +58,6 @@ SYSTEM_PROGRAMMING_SLIDES = \
 		debugging-system-wide-profiling \
 		debugging-kernel-debugging \
 		debugging-going-further \
-		sysdev-references \
-		last-slides \
-		sysdev-extra-slides
 
 SYSTEM_PROGRAMMING_LABS   = setup \
 		sysdev-toolchain \
