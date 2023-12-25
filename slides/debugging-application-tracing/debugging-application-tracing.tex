@@ -1,7 +1,38 @@
 \section{Application Tracing}
 
+\subsection{strace}
+
 \input{../common/strace.tex}
+
+\subsection{ltrace}
+
 \input{../common/ltrace.tex}
+
+\subsection{LD\_PRELOAD}
+
+\begin{frame}
+  \frametitle{Shared libraries}
+  \begin{itemize}
+    \item Shared libraries are provided as {\em .so} files that are actually ELF files
+    \begin{itemize}
+      \item Loaded at startup by \code{ld.so} (the dynamic loader)
+      \item Or at runtime using \code{dlopen()} from your code
+    \end{itemize}
+    \item When starting a program (an ELF file actually), the kernel will
+          parse it and load the interpreter that needs to be invoked.
+    \begin{itemize}
+      \item Most of the time \code{PT_INTERP} program header of the ELF file is
+            set to \code{ld-linux.so}.
+    \end{itemize}
+    \item At loading time, the dynamic loader \code{ld.so} will resolve all the
+          symbols that are present in dynamic libraries.
+    \item Shared libraries are loaded only once by the OS and then mappings are
+          created for each application that uses the library.
+    \begin{itemize}
+      \item This allows to reduce the memory used by libraries.
+    \end{itemize}
+  \end{itemize}
+\end{frame}
 
 \begin{frame}
   \frametitle{Hooking Library Calls}
@@ -57,6 +88,8 @@ $ LD_PRELOAD=./my_lib.so ./exe
   \end{block}
 \end{frame}
 
+\subsection{uprobes and perf}
+
 \begin{frame}[fragile]
   \frametitle{uprobes}
   \begin{itemize}
@@ -111,17 +144,21 @@ $ LD_PRELOAD=./my_lib.so ./exe
 \begin{frame}[fragile]
   \frametitle{Probing userspace functions}
   \begin{itemize}
+    \item List functions that can be probed in a specific
+          executable:
+  \begin{block}{}
+    \begin{minted}[fontsize=\scriptsize]{C}
+$ perf probe --source=<source_dir> -x my_app -F
+    \end{minted}
+  \end{block}
     \item List lines number that can be probed in a specific
           executable/function:
-  \end{itemize}
   \begin{block}{}
     \begin{minted}[fontsize=\scriptsize]{C}
 $ perf probe --source=<source_dir> -x my_app -L my_func
     \end{minted}
   \end{block}
-  \begin{itemize}
-    \item Create tracepoints on user-space library/executable functions:
-  \end{itemize}
+    \item Create uprobes on user-space library/executable functions:
   \begin{block}{}
     \begin{minted}[fontsize=\scriptsize]{C}
 $ perf probe -x /lib/libc.so.6 printf
@@ -129,14 +166,13 @@ $ perf probe -x app my_func:3 my_var
 $ perf probe -x app my_func%return ret=%r0
     \end{minted}
   \end{block}
-  \begin{itemize}
   \item Record the execution of these tracepoints:
-  \end{itemize}
   \begin{block}{}
     \begin{minted}[fontsize=\scriptsize]{C}
 $ perf record -e probe_app:my_func -e probe_libc:printf
     \end{minted}
   \end{block}
+  \end{itemize}
 \end{frame}
 
 \setuplabframe
@@ -146,6 +182,7 @@ $ perf record -e probe_app:my_func -e probe_libc:printf
   \begin{itemize}
     \item Analyze dynamic library calls from an application using
             {\em ltrace}.
+    \item Overriding a library function with \code{LD_PRELOAD}.
     \item Using {\em strace} to analyze program syscalls.
   \end{itemize}
 }
