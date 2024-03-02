@@ -17,11 +17,10 @@ We will first create a basic BitBake append file, without any change made
 to the original recipe, to see how it is integrated into the build. We will then
 extend some configuration variables of the original recipe.
 
-Try to create an appended recipe with the help of the online Yocto
-Project development documentation. You can find it at
-\url{https://docs.yoctoproject.org/dev-manual/layers.html}. We here
-aim to extend the \ifdefstring{\labboard}{stm32mp1}{\code{linux-stm32mp}}
+We here aim to extend the \ifdefstring{\labboard}{stm32mp1}{\code{linux-stm32mp}}
 {\code{linux-ti-staging}} kernel recipe.
+
+Try to create an appended recipe using the guidelines given in the slides.
 
 You can see available \code{bbappend} files and the recipe they apply to by
 using the \code{bitbake-layers} tool (again!):
@@ -144,7 +143,7 @@ The nInvaders game uses keyboard events for its controls. We first need to apply
 a patch introducing joystick support. The patch is located at
 \code{~/__SESSION_NAME__-labs/bootlin-lab-data/nunchuk/ninvaders/}.
 
-Add the patch to the nInvaders \code{SRC_URI}.
+Add the patch to the nInvaders \yoctovar{SRC_URI}.
 
 Then build a full \code{core-image-minimal} and update the NFS root
 directory.

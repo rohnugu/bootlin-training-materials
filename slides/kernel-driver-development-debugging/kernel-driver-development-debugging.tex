@@ -113,7 +113,7 @@
     \item OpenOCD is the bridge between the gdb debugging language
       and the JTAG interface of the target CPU.
     \item See the very complete documentation:
-      \url{http://openocd.org/documentation/}
+      \url{https://openocd.org/pages/documentation.html}
     \item For each board, you'll need an OpenOCD configuration file
       (ask your supplier)
     \end{itemize}
@@ -161,7 +161,8 @@
     \item This way, the kernel is compiled with \code{$(CROSSCOMPILE)gcc
         -g}, which keeps the source code inside the binaries.
     \end{itemize}
-  \item If your device is not probed, try enabling \kconfig{CONFIG_DRIVER_DEBUG}
+  \item If your device is not probed, try enabling
+        \kconfig{CONFIG_DEBUG_DRIVER}
     \begin{itemize}
     \item Extremely verbose!
     \item Will enable all the debug logs in the device-driver core

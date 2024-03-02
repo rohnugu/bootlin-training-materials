@@ -3,7 +3,7 @@
 \begin{frame}{Anatomy}
   \begin{center}
     \includegraphics[width=\textwidth]{slides/audio-hardware/anatomy.pdf}\\
-    {\textit Example of an embedded system sound card}
+    {\em Example of an embedded system sound card}
   \end{center}
 \end{frame}
 
@@ -56,13 +56,15 @@
   \end{itemize}
   \begin{columns}
     \column{0.5\textwidth}
-    e.g. AD1937 has:
+    e.g.
+    \href{https://www.analog.com/media/en/technical-documentation/data-sheets/AD1937.pdf}
+    {AD1937} has:
     \begin{itemize}
     \item 8 DACs in 4 pairs, 4 ADCs in 2 pairs
     \item clocks for data-in: DBCLK, DLRCLK
     \item 4 data-in lines (DSDATA[1-4])
     \item clocks for data-out: ABCLK, ALRCLK
-    \item 2 data-out lines (ASDATA[1-4])
+    \item 2 data-out lines (ASDATA[1-2])
     \end{itemize}
     \column{0.5\textwidth}
     \includegraphics[width=\textwidth]{slides/audio-hardware/ad1937.pdf}\\
@@ -79,7 +81,7 @@
     crystal.
   \item Some codecs are able to use BCLK or LRCLK as their clock,
     making MCLK optional.
-  \item usually the codecs will expect MCLK to be a multiple of BCLK.
+  \item Usually the codecs will expect MCLK to be a multiple of BCLK.
     Usually specified as a multiple of Fs.
   \end{itemize}
 \end{frame}

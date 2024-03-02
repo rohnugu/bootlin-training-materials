@@ -22,16 +22,14 @@ the bootfs partition of the SD card and change the \code{APPEND} line to:
 
 {\small
 \begin{verbatim}
-APPEND root=/dev/nfs rw console=ttySTM0,115200 nfsroot=192.168.0.1:/nfs,vers=3,tcp ip=192.168.0.100:::::eth0
+APPEND root=/dev/nfs rw console=ttySTM0,115200 nfsroot=192.168.0.1:/nfs,vers=3,tcp ip=192.168.0.100
 \end{verbatim}
 }
 
 \begin{itemize}
-  \item For the \code{stm32mp157a-dk1-sdcard}
-        and the \code{stm32mp157d-dk1-sdcard}, edit
-        the \code{mmc0_extlinux/extlinux.conf} file
-  \item For the \code{stm32mp157c-dk2-sdcard}, edit the
-        \code{mmc0_extlinux/stm32mp157c-dk2_extlinux.conf} file
+  \item For the \code{stm32mp157a-dk1} board, edit the \code{mmc0_extlinux/extlinux.conf} file.
+  \item For the other boards, edit the corresponding file (for example \code{mmc0_extlinux/stm32mp157d-dk1_extlinux.conf}
+        for the \code{stm32mp157d-dk1} board).
 \end{itemize}
 
 \section{Set up the Ethernet communication on the workstation}
@@ -53,7 +51,7 @@ Names} convention:
 If you have a pluggable Ethernet device, it's easy to identify as it's
 the one that shows up after pluging in the device.
 
-Then, instead of configuring the host IP address from NetWork Manager’s graphical interface,
+Then, instead of configuring the host IP address from NetworkManager’s graphical interface,
 let’s do it through its command line interface, which is so much easier to use:
 
 \begin{verbatim}
@@ -145,7 +143,7 @@ bitbake -vn virtual/kernel
 \end{verbatim}
 
 Tip: you need to define the more specific information here to be sure it is the
-one used. The \code{MACHINE} variable can help here.
+one used. The \yoctovar{MACHINE} variable can help here.
 
 As this was only to show how to select a preferred provider for a
 given package, you can now use \code{linux-stm32mp} again.
@@ -180,22 +178,33 @@ For detailed information, please run \code{bitbake -h}
 \section{Going further}
 
 If you have some time left, let's improve our setup to use TFTP, in
-order to avoid having to reflash the SD card for every test. What you
-need to do is:
+order to avoid having to reflash the SD card for every test.
 
-\begin{enumerate}
+First, install a TFTP server (package \code{tftpd-hpa}) on your system.
 
-\item Install a TFTP server (package \code{tftpd-hpa}) on your system.
+Then copy the Linux kernel image and Device Tree to the TFTP server home
+directory (specified in \code{/etc/default/tftpd-hpa}) so that they are
+made available by the TFTP server.
 
-\item Copy the Linux kernel image and Device Tree to
-  the TFTP server home directory (specified in
-  \code{/etc/default/tftpd-hpa}) so that they are made available by the TFTP
-  server.
+Then, in the U-Boot shell, change the \code{bootcmd} variable to load the
+kernel image and the Device Tree over TFTP (replace \code{dtb} by
+the actual Device Tree file for your board):
 
-\item Change the U-Boot \code{bootcmd} to load the kernel image and
-  the Device Tree over TFTP.
+\begin{verbatim}
+setenv ipaddr 192.168.0.100
+setenv serverip 192.168.0.1
+setenv bootcmd 'tftp 0xc2000000 zImage; tftp 0xc4000000 dtb; bootz 0xc2000000 - 0xc4000000'
+\end{verbatim}
 
-\end{enumerate}
+Still in the U-Boot shell, set the \code{bootargs} specifying the kernel command line that
+we previously set in \code{extlinux.conf}:
 
-See the training materials of our {\em Embedded Linux system
-  development} course for details!
+{\small
+\begin{verbatim}
+setenv bootargs root=/dev/nfs rw console=ttySTM0,115200 nfsroot=192.168.0.1:/nfs,vers=3,tcp ip=192.168.0.100
+saveenv
+\end{verbatim}
+}
+
+See the training materials of our {\em Embedded Linux system development}
+course for details!

@@ -62,8 +62,9 @@
       \item Limited addresses ranges reserved for this usage
       \end{itemize}
     \end{itemize}
-  \item See Arnd Bergmann's {\em 4GB by 4GB split} presentation (video
-        and slides) at Linaro Connect virtual 2020: \url{https://frama.link/fD1HvuVP}
+  \item See Arnd Bergmann's {\em 4GB by 4GB split} presentation
+        (\href{https://resources.linaro.org/en/resource/TXkzgNDFp3HiJKdfQjbssL}
+        {video and slides}) at Linaro Connect virtual 2020.
   \end{itemize}
 \end{frame}
 
@@ -243,21 +244,16 @@
 \begin{frame}[fragile]
   \frametitle{Different SLAB allocators}
   \small
-  There are three different, but API compatible, implementations of
+  There are different, but API compatible, implementations of
   a SLAB allocator in the Linux kernel. A particular implementation
   is chosen at configuration time.
   \begin{itemize}
-  \item SLAB: legacy, well proven allocator.\\
-        Linux 5.10 on arm (32 bit): used in 39 \code{defconfig} files
-  \item SLOB: much simpler. More space efficient but doesn't scale well.\\
-        Can save space in small systems (depends on \kconfig{CONFIG_EXPERT}). \\
-        Linux 5.10 on arm (32 bit): used in 7 \code{defconfig} files \\
-        Results on BeagleBone Black: -5 KB compressed kernel size, +1.43 s boot time!
-  \item SLUB: more recent and simpler than
-        SLAB, scaling much better (in particular for huge systems) and
-        creating less fragmentation. Now the default allocator.\\
-        Linux 5.10 on arm (32 bit): used in 9 \code{defconfig} files \\
-	Results on BeagleBone Black: +4 KB compressed kernel, + 2ms total boot time.
+  \item \kconfig{CONFIG_SLAB}: legacy but now deprecated
+  \item \kconfig{CONFIG_SLUB}: the default allocated, scaling better and creating less
+        fragmentation than previous implementations.
+  \item \kconfig{CONFIG_SLUB_TINY}: configure SLUB to achieve minimal memory
+	footprint, sacrificing scalability, debugging and other
+        features. Not recommended for systems with more than 16 MB of RAM.
   \end{itemize}
   \begin{center}
     \includegraphics[height=0.2\textheight]{slides/kernel-driver-development-memory/slab-screenshot.png}
@@ -390,8 +386,7 @@ kfree(tprops);
     \begin{itemize}
     \item A low overhead alternative to KASAN, trading performance
 	  for precision. Meant to be used in production systems.
-    \item Only available on \code{x86}, \code{arm64} and \code{powerpc}
-          (Linux 5.13 status)
+    \item Available on most architectures.
     \item See \kdochtml{dev-tools/kfence} for details.
     \end{itemize}
   \item \code{Kmemleak}

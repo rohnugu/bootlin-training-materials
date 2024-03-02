@@ -374,7 +374,8 @@ Clocks:
 Core:  275 devices, 36 uclasses, devicetree: board
 NAND:  0 MiB
 MMC:   STM32 SD/MMC: 0
-Loading Environment from EXT4... OK
+Loading Environment from EXT4... ** File not found /uboot.env **
+** Unable to read "/uboot.env" from mmc0:4 **
 In:    serial
 Out:   serial
 Err:   serial
@@ -472,7 +473,7 @@ Names} convention:
 If you have a pluggable Ethernet device, it's easy to identify as it's
 the one that shows up after pluging in the device.
 
-Then, instead of configuring the host IP address from NetWork Manager's
+Then, instead of configuring the host IP address from NetworkManager's
 graphical interface, let's do it through its command line interface,
 which is so much easier to use:
 

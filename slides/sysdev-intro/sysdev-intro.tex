@@ -23,9 +23,7 @@
       \includegraphics[width=\textwidth]{slides/sysdev-intro/richard-stallman.jpg}
       \scriptsize
       Richard Stallman in 2019\\
-      \tiny
-      Image credits (Wikipedia):\\
-      \url{https://frama.link/qC73jkk4}
+      \tiny \url{https://commons.wikimedia.org/wiki/File:Richard_Stallman_at_LibrePlanet_2019.jpg}
     \end{columns}
 
 \end{frame}
@@ -59,7 +57,7 @@
 
 \begin{frame}[c]
   \frametitle{Advantages of Linux and Open-Source in embedded systems}
-  \small
+  \footnotesize
   \begin{columns}
   \column{0.5\textwidth}
     \setbeamerfont{itemize/enumerate body}{size=\footnotesize}
@@ -84,6 +82,9 @@
            Your system is built on high-quality foundations
            (kernel, compiler, C-library, base utilities...). Many
            Open-Source applications have good quality too.
+     \item {\bf Security}\\
+           You can trace the sources of all system components
+           and perform independent vulnerability assessments.
      \item {\bf Community support}\\
            Can get very good support from the
 	   community if you approach it with a constructive attitude.
@@ -248,8 +249,7 @@
     \scriptsize
     STM32MP157C-EV1 evaluation board\\
     \tiny
-    Image credits (st.com):\\
-    \url{https://frama.link/NySnaxuV}\\
+    \href{https://www.mouser.fr/ProductDetail/STMicroelectronics/STM32MP157C-EV1?qs=9r4v7xj2LnmHBJ35TLmsRg\%3D\%3D}{Image credits}
     \vspace{0.5cm}
     \includegraphics[width=\textwidth]{slides/sysdev-intro/pocketbeagle.png}
     \scriptsize
@@ -293,7 +293,7 @@
   \begin{itemize}
   \item Most SoCs are delivered with support for the Linux kernel
     and for an open-source bootloader.
-  \item Having support in the official versions of the projects
+  \item Having support for your SoC in the official versions of the projects
     (kernel, bootloader) is a lot better: quality is better, new
     versions are available, and Long Term Support releases are
     available.
@@ -302,8 +302,8 @@
     use another product if you can. A good measurement is to see the
     delta between their kernel and the official one.
   \item {\bf Between properly supported hardware in the official Linux
-      kernel and poorly-supported hardware, there will be huge
-      differences in development time and cost.}
+    kernel and poorly-supported hardware, there will be huge
+    differences in development time and cost.}
   \end{itemize}
 \end{frame}
 

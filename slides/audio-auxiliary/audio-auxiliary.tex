@@ -4,18 +4,22 @@
   What about the amplifier?
   \begin{itemize}
   \item Supported using {\em auxiliary devices}
-  \item Register a \code{struct snd_soc_aux_dev} array using the
+  \item Register a \kstruct{snd_soc_aux_dev} array using the
     \code{.aux_dev} and \code{.num_aux_devs} fields of the registered
-    \code{struct snd_soc_card}
+    \kstruct{snd_soc_card}
   \item This will expose the auxiliary devices control widgets as part
     of the sound card
   \item There is a driver for simple amplifiers driven by a single
-    GPIO, \code{simple-amplifier}.
+    GPIO, \code{simple-amplifier}
+    \begin{itemize}
+      \item \kfile{Documentation/devicetree/bindings/sound/simple-audio-amplifier.yaml}
+      \item \kfile{sound/soc/codecs/simple-amplifier.c}
+    \end{itemize}
   \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]{Auxiliary devices}
-  \begin{block}{\code{sound/soc/samsung/neo1973_wm8753.c}}
+  \begin{block}{\kfile{sound/soc/samsung/neo1973_wm8753.c}}
     \fontsize{9}{9}\selectfont
     \begin{minted}{c}
 static struct snd_soc_aux_dev neo1973_aux_devs[] = {
@@ -37,7 +41,7 @@ static struct snd_soc_card neo1973 = {
 \end{frame}
 
 \begin{frame}[fragile]{simple-amplifier - example 1}
-arch/arm64/boot/dts/allwinner/sun50i-a64-pinebook.dts
+\kfile{arch/arm64/boot/dts/allwinner/sun50i-a64-pinebook.dts}
   \begin{block}{}
     \fontsize{7}{6}\selectfont
     \begin{minted}{c}
@@ -90,7 +94,7 @@ arch/arm64/boot/dts/allwinner/sun50i-a64-pinebook.dts
                                 "Lineout", "AU2 OUTR";
     \end{minted}
   \end{block}
-  Audio is routed through\code{AU2}, the amplifier.
+  Audio is routed through \code{AU2}, the amplifier.
 \end{frame}
 
 \begin{frame}{Input Muxing}
@@ -101,6 +105,10 @@ arch/arm64/boot/dts/allwinner/sun50i-a64-pinebook.dts
   \item It exposes two inputs: "IN1" and "IN2" and one output, "OUT".
   \item The device tree binding allows to provide a prefix to make the
     routes specific.
+    \begin{itemize}
+      \item \kfile{Documentation/devicetree/bindings/sound/simple-audio-mux.yaml}
+      \item \kfile{sound/soc/codecs/simple-mux.c}
+    \end{itemize}
   \end{itemize}
 \end{frame}
 
@@ -127,7 +135,7 @@ arch/arm64/boot/dts/allwinner/sun50i-a64-pinebook.dts
 \end{frame}
 
 \begin{frame}[fragile]{\code{simple-mux} example}
-  \begin{block}{}
+  \begin{block}{\kfile{arch/arm64/boot/dts/freescale/imx8mq-librem5-devkit.dts}}
     \fontsize{7}{6}\selectfont
     \begin{minted}{c}
         sound {

@@ -53,8 +53,8 @@
     \begin{minted}[fontsize=\small]{C}
 struct kprobe probe = {
   .symbol_name = "do_exit",
-  .pre_handler = probe_pre;
-  .post_handler = probe_post;
+  .pre_handler = probe_pre,
+  .post_handler = probe_post,
 };
 
 register_kprobe(&probe);
@@ -84,8 +84,8 @@ int (*kretprobe_handler_t) (struct kretprobe_instance *, struct pt_regs *);
     \begin{minted}[fontsize=\small]{C}
 struct kretprobe probe = {
   .kp.symbol_name = "do_fork",
-  .entry_handler = probe_entry;
-  .handler = probe_exit;
+  .entry_handler = probe_entry,
+  .handler = probe_exit,
 };
 
 register_kretprobe(&probe);
@@ -554,7 +554,7 @@ stress-n-114       0d.s.  290us : <stack trace>
 void read_hw()
 {
   if (condition)
-    trace_printk("Condition is true!");
+    trace_printk("Condition is true!\n");
 }
     \end{minted}
   \end{block}
@@ -795,6 +795,8 @@ void any_func(void)
   \center\includegraphics[height=0.8\textheight]{slides/debugging-system-wide-profiling/kernelshark.png}
 \end{frame}
 
+\subsection{eBPF}
+
 \begin{frame}
   \frametitle{eBPF (1/2)}
   \begin{itemize}
@@ -813,8 +815,6 @@ void any_func(void)
   \center\includegraphics[height=0.2\textheight]{slides/debugging-linux-application-stack/logo_ebpf.png}\\ 
   \tiny Image credits: \url{https://ebpf.io/}
 \end{frame}
-
-\subsection{eBPF}
 
 \begin{frame}
   \frametitle{eBPF (2/2)}

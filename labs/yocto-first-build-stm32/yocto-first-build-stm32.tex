@@ -17,9 +17,10 @@ system due to limitations in file name lengths.
 Go to the \code{$HOME/__SESSION_NAME__-labs/} directory.
 
 Install the required packages:
-\begin{bashinput}
-sudo apt install bc build-essential chrpath cpio diffstat gawk git python3 texinfo wget gdisk libssl-dev lz4
-\end{bashinput}
+\begin{verbatim}
+sudo apt install bc build-essential chrpath cpio diffstat gawk git python3 texinfo wget \
+     gdisk libssl-dev lz4
+\end{verbatim}
 
 \section{Download Yocto}
 
@@ -36,7 +37,7 @@ and download the OpenEmbedded and STM32MP layers:
 git clone -b kirkstone https://git.openembedded.org/meta-openembedded
 git clone https://github.com/STMicroelectronics/meta-st-stm32mp
 cd meta-st-stm32mp
-git checkout openstlinux-5.15-yocto-kirkstone-mp1-v23.07.26
+git checkout openstlinux-5.15-yocto-kirkstone-mp1-v22.11.23
 \end{bashinput}
 
 \section{Set up the build environment}
@@ -51,7 +52,7 @@ source poky/oe-init-build-env
 
 You must specify which machine is your target. By default it
 is \code{qemu}. We need to build an image for an \code{stm32mp1}.
-Update the \code{MACHINE} configuration variable accordingly.
+Update the \yoctovar{MACHINE} configuration variable accordingly.
 
 Also, if you need to save disk space on your computer you can add \code{INHERIT
 += "rm_work"} in the previous configuration file. This will remove the
@@ -61,7 +62,7 @@ Don't forget to make the configuration aware of the OpenEmbedded and
 STM32MP layers. Edit the layer configuration file
 (\code{$BUILDDIR/conf/bblayers.conf}) and append the full path to the
 \code{meta-openembedded/meta-oe}, \code{meta-openembedded/meta-python} and \code{meta-st-stm32mp} directory to the
-\code{BBLAYERS} variable.
+\yoctovar{BBLAYERS} variable.
 
 \section{Build your first image}
 

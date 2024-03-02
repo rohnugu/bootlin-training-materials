@@ -98,9 +98,9 @@
   \frametitle{The header}
   Configuration variables to describe the application:
   \begin{itemize}
+    \item \yoctovar{SUMMARY}: short descrition for the package manager
     \item \yoctovar{DESCRIPTION}: describes what the software is about
     \item \yoctovar{HOMEPAGE}: URL to the project's homepage
-    \item \yoctovar{PRIORITY}: defaults to \code{optional}
     \item \yoctovar{SECTION}: package category (e.g. \code{console/utils})
     \item \yoctovar{LICENSE}: the application's license, using SPDX identifiers
       (\url{https://spdx.org/licenses/})
@@ -134,8 +134,10 @@
         \item \code{git://<url>;protocol=<protocol>;branch=<branch>}
         \item When using git, it is necessary to also define
           \yoctovar{SRCREV}. It has to be a commit hash and not a tag to
-          be able to do offline builds. The \code{branch} parameter is
-          mandatory unless \code{nobranch=1} is used.
+          be able to do offline builds (a git tag can change, you then need
+	  to connect to the repository to check for a possible update).
+          The \code{branch} parameter is mandatory as a safety check
+          that \yoctovar{SRCREV} is on the expected branch.
       \end{itemize}
     \item The \code{http}, \code{https} and \code{ftp} schemes:
       \begin{itemize}
@@ -438,24 +440,29 @@ addtask do_mkimage after do_compile before do_install
 
 \subsection{Applying patches}
 
-\begin{frame}
-  \frametitle{Patches use cases}
+\begin{frame}[fragile]
+  \frametitle{Patch use cases}
   Patches can be applied to resolve build-system problematics:
   \begin{itemize}
     \item To support old versions of a software: bug and security
       fixes.
     \item To fix cross-compilation issues.
-      \begin{itemize}
-        \item In certain simple cases the \code{-e} option of
-          \code{make} can be used.
-        \item The \code{-e} option gives variables taken from the
-          environment precedence over variables from \code{Makefiles}.
-        \item Helps when an upstream \code{Makefile} uses hardcoded
-          \code{CC} and/or \code{CFLAGS}.
-      \end{itemize}
     \item To apply patches before they make their way into the upstream
       version.
   \end{itemize}
+  However, there are cases when patching a \code{Makefile} is unnecessary:
+  \begin{itemize}
+    \item For example, when an upstream \code{Makefile} uses hardcoded
+          \code{CC} and/or \code{CFLAGS}.
+    \item You can call \code{make} with the \code{-e} option
+	  which gives precedence to variables taken from the
+          environment:
+  \end{itemize}
+  \begin{block}{}
+    \begin{minted}{sh}
+EXTRA_OEMAKE = "-e"
+    \end{minted}
+  \end{block}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -510,9 +517,9 @@ SRC_URI += "file://joystick-support.patch \
   \frametitle{Hello world recipe}
   \begin{block}{}
     \begin{minted}[fontsize=\scriptsize]{sh}
+SUMMARY = "Hello world program"
 DESCRIPTION = "Hello world program"
 HOMEPAGE = "http://example.net/hello/"
-PRIORITY = "optional"
 SECTION = "examples"
 LICENSE = "GPL-2.0-or-later"
 
@@ -583,4 +590,42 @@ LIC_FILES_CHKSUM =  \
 SRC_URI[md5sum] = "2cee42a2ff4f1cd4f9298eeeb2264519"
     \end{minted}
   \end{block}
+\end{frame}
+
+\subsection{Debugging recipes}
+
+\begin{frame}
+  \frametitle{Log and run files}
+  \begin{itemize}
+    \item For each task, these files are generated in the \code{temp}
+      directory under the recipe work directory
+    \item \code{run.do_<taskname>}
+      \begin{itemize}
+      \item the script generated from the recipe content and executed to
+        run the task
+      \end{itemize}
+    \item \code{log.do_<taskname>}
+      \begin{itemize}
+      \item the output of the task execution
+      \end{itemize}
+    \item These can be inspected to understand what is being done by the
+      tasks
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Debugging variable assignment}
+  \begin{itemize}
+    \item \code{bitbake-getvar} can dump the per-recipe variable value
+      using the \code{-r} option
+      \begin{itemize}
+      \item \code{bitbake-getvar -r ncurses SRC_URI}
+      \end{itemize}
+    \item Similarly, \code{bitbake -e} dumps the entire environment, and
+      also the task code
+      \begin{itemize}
+      \item \code{bitbake -e}
+      \item \code{bitbake -e ncurses}
+      \end{itemize}
+  \end{itemize}
 \end{frame}
