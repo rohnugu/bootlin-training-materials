@@ -1,0 +1,1 @@
+partitions=name=boot,size=4M

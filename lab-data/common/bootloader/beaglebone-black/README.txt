@@ -1,6 +1,6 @@
-=====================================================================================================
-Install U-boot 2018.05 on the BeagleBone Black (including BBB Wireless) internal flash storage (eMMC)
-=====================================================================================================
+=============================================================================================
+Install U-boot on the BeagleBone Black (including BBB Wireless) internal flash storage (eMMC)
+=============================================================================================
 
 This is needed for some aspects of Bootlin's kernel, Yocto Project and Buildroot labs,
 such as saving U-Boot environment settings to eMMC storage.
@@ -9,16 +9,93 @@ Tested on the following board revisions:
 - Original release of the board
 
 Caution: this procedure can erase data installed on the board eMMC.
-This won't make your board unusable though.
-
-If you want to install a distribution again on the eMMC, just go to
+This won't make your board unusable though. If you want to install a
+distribution again on the eMMC, just go to
 http://beagleboard.org/latest-images and follow instructions.
+
+1. Download the images
+2a. Flash the image using Ethernet over USB with 'snagboot' (recommended)
+2b. Flash the image using a micro-SD card (legacy)
+3a. How snagboot images were built
+3b. How the images for SD card recovery were built
+
+======================
+1. Download the images
+======================
+
+We suggest you to clone this repository, where all binary images are
+ready to be used. You can also build them on your own if you wish, all
+instructions are provided in chapter 3.
+
+===========================================
+2b. Flash the image using Ethernet over USB
+===========================================
+
+Follow the installation instructions at
+https://github.com/bootlin/snagboot to install snagboot.
+
+Setup the snagboot recovery environment
+by running the am335x setup script:
+```
+snagrecover --am335x-setup > am335x_usb_setup.sh
+chmod a+x am335x_usb_setup.sh
+sudo ./am335x_usb_setup.sh
+```
+
+If you have trouble with this step, you can find more detailed instructions
+in the snagboot documentation:
+https://github.com/bootlin/snagboot/blob/main/docs/board_setup.md#ti-am335x-usb-recovery
+
+Put the BBB into recovery mode by unplugging and replugging the power cable
+while pressing the S2 switch. Please beware that a warm reset performed
+with the reset button won't work, as it does not affect the boot source!
+
+Check that the following USB device is present:
+
+    $ lsusb | grep AM335x
+    Bus 001 Device 024: ID 0451:6141 Texas Instruments, Inc. AM335x USB
+
+Run snagrecover from the snagboot recovery shell:
+
+    # snagrecover -s am3358 \
+                  -F "{'spl': {'path': 'u-boot-spl.bin'}}" \
+		  -F "{'u-boot': {'path': 'u-boot.img'}}"
+
+Once you get a U-Boot prompt on the serial console, enable fastboot:
+
+    => env default -a
+    => unbind ethernet 1
+    => fastboot usb 0
+
+Don't be upset by the following message, it's expected...
+
+    musb-hdrc: peripheral reset irq lost!
+
+Then from the host, flash the image:
+
+    $ snagflash -P fastboot -p 0451:d022 -f oem_format -f download:sdcard.img -f flash:1:0
+
+Finally, return to U-Boot, exit fastboot mode using Ctrl+c and save the
+environment:
+
+    => saveenv
+
+Reboot by unplugging the power supply cable and the micro-usb cable (just
+resetting won't change the boot source), and enjoy the training!
+
+=========================================
+2b. Flash the image using a micro-SD card
+=========================================
+
+These instructions are given as reference only, they will install an old
+U-Boot. Prefer using method 2a using Snagboot.
 
 Make a bootable micro-SD card
 -----------------------------
 
 We are going to prepare a bootable micro-SD card that will automatically
-reflash the eMMC with the U-Boot binaries provided in this directory.
+reflash the eMMC with the U-Boot binaries provided in the sdcard/
+directory.
 
 Take a micro-SD card and connect it to your PC:
 - Either using a direct SD slot if available.
@@ -95,9 +172,35 @@ available either.
 Should you need more standard tools, you may boot the board with
 an MMC card with Debian on it (see http://beagleboard.org/latest-images).
 
-==============================
-How the binaries were compiled
-==============================
+========================================================
+3a. How the binaries were compiled for Snagboot recovery
+========================================================
+
+Compiling U-Boot
+----------------
+
+git checkout v2024.01
+cp src/snagboot/u-boot/uEnv.txt ~/u-boot/
+cp src/snagboot/u-boot/u-boot-2024.01.config ~/u-boot/.config
+make
+
+You can as well re-create this configuration with:
+make am335x_evm_defconfig
+make menuconfig
+# select CONFIG_USE_DEFAULT_ENV_FILE
+# set CONFIG_DEFAULT_ENV_FILE=uEnv.txt
+# set CONFIG_ENV_FAT_DEVICE_AND_PART="1:1"
+# set CONFIG_SYS_MMC_ENV_DEV=1
+
+Assembling all files into sdcard.img
+------------------------------------
+
+This is done using the ./gen.sh script, which itself uses the genimage
+tool.
+
+=======================================================
+3b. How the binaries were compiled for SD-card recovery
+=======================================================
 
 Caution: instructions for people already familiar with embedded Linux.
 See our Embedded Linux course (https://bootlin.com/training/embedded-linux/)
@@ -121,22 +224,22 @@ git checkout v2018.05
 export CROSS_COMPILE=arm-linux-gnueabi-
 make am335x_boneblack_defconfig
 
-To compile u-boot.img and MLO:
-Copy the src/u-boot/u-boot-2018.05.config file to .config
+To compile sdcard/u-boot.img and sdcard/MLO:
+Copy src/sdcard/u-boot/u-boot-2018.05.config file to .config
 make
 
-To compile u-boot.img.final and MLO.final:
-Copy the src/u-boot-final/u-boot-2018.05.config file to .config
-and the src/u-boot-final/uEnv.txt file to the U-boot toplevel source directory
-(this contains default environment settings)
+To compile sdcard/u-boot.img.final and sdcard/MLO.final:
+Copy src/sdcard/u-boot-final/u-boot-2018.05.config to .config
+Copy src/sdcard/u-boot-final/uEnv.txt to the U-boot toplevel source
+directory (this contains default environment settings)
 make
 
-This produces the MLO and u-boot.img files.
+This produces the sdcard/MLO and sdcard/u-boot.img files.
 
 Root filesystem
 ---------------
 
-The root filesystem is available in src/rootfs.tar.xz
+The root filesystem is available in src/sdcard/rootfs.tar.xz
 
 To rebuild your kernel, extract the contents of this archive,
 as the kernel binary will contain the root filesystem (initramfs)
@@ -147,7 +250,7 @@ few custom scripts. It is very easy to update (you don't need
 tools like Buildroot).
 
 If you to need to update it, get the latest BusyBox 1.21.x sources,
-and configure them with src/busybox-1.21.x.config
+and configure them with src/sdcard/busybox-1.21.x.config
 
 If you don't, just go to the next section.
 
@@ -169,20 +272,20 @@ Now configure and compile the sources as follows
 (we are using the same toolchain as for compiling U-Boot)
 export ARCH=arm
 export CROSS_COMPILE=arm-linux-gnueabi-
-Copy the src/linux-4.17.config file to .config
+Copy src/sdcard/linux-4.17.config file to .config
 make -j 8
 
 This produces:
 arch/arm/boot/zImage
 arch/arm/boot/dts/am335x-boneblack-wireless.dtb
 
-Copy the arch/arm/boot/dts/am335x-boneblack-wireless.dtb to "dtb"
+Copy the arch/arm/boot/dts/am335x-boneblack-wireless.dtb to sdcard/dtb
 (this dtb will work fine for both BeagleBone Black
 and BeagleBoneBlack Wireless, at least for the purpose of
-reflashing U-Boot).
+reflashing U-Boot) and the zImage file as well.
 
 Assembling all files into sdcard.img
 ------------------------------------
 
-This is done using the ./gen.sh script, which itself uses the genimage
-tool.
+This is done using the sdcard/gen.sh script, which itself uses the
+genimage tool.
