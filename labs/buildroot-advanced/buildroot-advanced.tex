@@ -27,7 +27,7 @@ Now, let's get a better visualization of this raw data:
 make graph-build
 \end{bashinput}
 
-Note: you may need to install \code{python-matplotlib} on your machine.
+Note: you may need to install \code{python-matplotlib} and \code{graphviz} on your machine.
 
 The graphs are generated in \code{output/graphs}:
 
@@ -84,7 +84,7 @@ named \code{.config} and put the following contents:
 BR2_TOOLCHAIN_BUILDROOT_GLIBC=y
 BR2_TOOLCHAIN_BUILDROOT_CXX=y
 BR2_PACKAGE_MESA3D=y
-BR2_PACKAGE_MESA3D_DRI_DRIVER_SWRAST=y
+BR2_PACKAGE_MESA3D_GALLIUM_DRIVER_SWRAST=y
 BR2_PACKAGE_MESA3D_OPENGL_EGL=y
 BR2_PACKAGE_MESA3D_OPENGL_ES=y
 BR2_PACKAGE_XORG7=y

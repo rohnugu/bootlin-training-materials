@@ -111,13 +111,28 @@
   \end{itemize}
 \end{frame}
 
+\begin{frame}{Vendoring}
+  \begin{itemize}
+  \item Some language-specific package management systems like to
+    download the dependencies by themselves: {\em vendoring}
+  \item Examples: {\em Cargo} in the Rust ecosystem, or {\em Go}
+  \item Problem for build systems: reproducibility of the builds,
+    licensing, offline builds
+  \item Buildroot supports vendoring dependencies for {\em cargo} and
+    {\em go} packages
+  \item Right after the download of the package source code, Buildroot
+    invokes the language-specific vendoring tool, and bundles the
+    dependencies inside the tarball
+  \end{itemize}
+\end{frame}
+
 \begin{frame}[fragile]{File integrity checking}
   \begin{itemize}
   \item Buildroot packages can provide a \code{.hash} file to provide
     {\em hashes} for the downloaded files.
   \item The download infrastructure uses this hash file when available
     to check the integrity of the downloaded files.
-  \item Hashs are checked every time a downloaded file is used, even
+  \item Hashes are checked every time a downloaded file is used, even
     if it is already cached in \code{$(DL_DIR)}.
   \item If the hash is incorrect, the download infrastructure attempts
     to re-download the file once. If that still fails, the build

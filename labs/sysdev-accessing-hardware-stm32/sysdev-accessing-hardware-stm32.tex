@@ -143,8 +143,8 @@ a GPIO).
 
 If you get back to the contents of \code{/sys/kernel/debug/gpio}, you'll
 find that GPIO bank E corresponds to \code{gpiochip4} and to GPIO
-numbers 64 to 79. Hence, PE1, the second pin on this bank corresponds to
-GPIO number 65.
+numbers 576 to 591. Hence, PE1, the second pin on this bank corresponds to
+GPIO number \gpionum.
 
 We now have everything we need to drive this GPIO using the legacy
 interface. First, let's enable it:
@@ -155,18 +155,18 @@ interface. First, let's enable it:
 \end{bashinput}
 
 If indeed the pin is still available, this should create a new
-{\tt gpio\gpionum} file should appear in \code{/sys/class/gpio}.
+\code{PE1} file in \code{/sys/class/gpio}.
 
 We can now configure this pin as input:
 
 \begin{bashinput}
-# echo in > gpio%\gpionum%/direction
+# echo in > %\gpioname%/direction
 \end{bashinput}
 
 And check its value:
 
 \begin{bashinput}
-# cat gpio%\gpionum%/value
+# cat %\gpioname%/value
 0
 \end{bashinput}
 
@@ -179,7 +179,7 @@ That's the same connector as before, just the second pin from the top
 Let's check the value again:
 
 \begin{bashinput}
-# cat gpio%\gpionum%/value
+# cat %\gpioname%/value
 1
 \end{bashinput}
 
@@ -290,19 +290,19 @@ To enable \busname\ on our system, we need to assign set \code{status =
 
 Fortunately, I2C5 is already defined in the one of the DTS includes
 used by the Device Tree for our board. In our case, that's in
-\kfileversion{arch/arm/boot/dts/stm32mp151.dtsi}{6.1}. Look by yourself in this
+\kfileversion{arch/arm/boot/dts/st/stm32mp151.dtsi}{6.6}. Look by yourself in this
 file, and you will find its definition, but with \code{status =
 "disabled";}. This means that this I2C controller is not enabled yet,
 and it's up to boards using it to do so.
 
-We could modify the \kfile{arch/arm/boot/dts/stm32mp157a-dk1.dts} file
+We could modify the \kfile{arch/arm/boot/dts/st/stm32mp157a-dk1.dts} file
 for our board, but that's not a very good idea as this file is
 maintained by the kernel developers. The changes that you make could
 collide with future changes made by the maintainers for this file.
 
 A more futureproof idea is to create a new Device Tree file which
 includes the standard one, and adds custom definitions. So, create a
-new \code{arch/arm/boot/dts/stm32mp157a-dk1-custom.dts} file containing:
+new \code{arch/arm/boot/dts/st/stm32mp157a-dk1-custom.dts} file containing:
 
 \begin{verbatim}
 /dts-v1/;
@@ -326,11 +326,11 @@ files for the SoC, without pin settings as these are board
 specific. Pin definitions are then usually defined at board level.
 
 In our case, we don't see such definitions, but they are actually
-found in the \kfile{arch/arm/boot/dts/stm32mp15xx-dkx.dtsi}
+found in the \kfile{arch/arm/boot/dts/st/stm32mp15xx-dkx.dtsi}
 file, shared between multiple stm32mp15 DK boards, which is included
 by the toplevel Device Tree for our board.
 
-Modify the \kfile{arch/arm/boot/dts/Makefile} file to add your custom
+Modify the \kfile{arch/arm/boot/dts/st/Makefile} file to add your custom
 Device Tree, and then have it compiled (\code{make dtbs}).
 
 Reboot your board with the update.
@@ -350,7 +350,7 @@ i2c-0	i2c             STM32F7 I2C(0x40012000)                 I2C adapter
 Now, let's use \code{i2cdetect}'s capability to probe a bus for devices.
 Let's start by the bus associated to \code{i2c-2}:
 
-\begin{bashinput}
+\begin{verbatim}
 # i2cdetect -r 2
 i2cdetect: WARNING! This program can confuse your I2C bus
 Continue? [y/N] y
@@ -363,7 +363,7 @@ Continue? [y/N] y
 50: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 60: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 70: -- -- -- -- -- -- -- --
-\end{bashinput}
+\end{verbatim}
 
 We can see two devices here:
 \begin{itemize}
@@ -376,8 +376,8 @@ We can see two devices here:
 
 Now try to probe I2C5 through \code{i2cdetect -r 1}.
 
-You will see that the command will fail to connect to
-the bus. That's because the corresponding signals are
+You will see that the command will run very slowly because of failing to
+connect to the bus. That's because the corresponding signals are
 not exposed yet to the outside connectors through pin muxing.
 
 So, get back to your Device Tree and remove the \code{/delete-property/}
@@ -385,7 +385,7 @@ line. Recompile your Device Tree and reboot.
 
 You should now be able to probe your bus:
 
-\begin{bashinput}
+\begin{verbatim}
 # i2cdetect -r 1
 i2cdetect: WARNING! This program can confuse your I2C bus
 Continue? [y/N] y
@@ -398,7 +398,7 @@ Continue? [y/N] y
 50: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 60: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 70: -- -- -- -- -- -- -- --
-\end{bashinput}
+\end{verbatim}
 
 No device is detected yet, because this bus is just
 used for external devices. It's time to add one though.
@@ -424,7 +424,7 @@ to the I2C5 bus on the board, using breadboard wires:
 If you didn't do any mistake, your new device should be detected at
 address \code{0x52}:
 
-\begin{bashinput}
+\begin{verbatim}
 # i2cdetect -r 1
 i2cdetect: WARNING! This program can confuse your I2C bus
 Continue? [y/N] y
@@ -437,7 +437,7 @@ Continue? [y/N] y
 50: -- -- 52 -- -- -- -- -- -- -- -- -- -- -- -- --
 60: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 70: -- -- -- -- -- -- -- --
-\end{bashinput}
+\end{verbatim}
 
 We will later compile an out-of-tree kernel module to support this device.
 
@@ -521,9 +521,9 @@ root filesystem (\code{$HOME/__SESSION_NAME__-labs/tinysystem/nfsroot}).
 
 Also make sure to update the kernel image (\code{make zImage}), and reboot the
 board.  Indeed, due to the changes we have made to the kernel source code,
-the kernel version is now \code{6.1.<x>-dirty}, the {\em dirty}
+the kernel version is now {\tt \workingkernel.<x>-dirty}, the {\em dirty}
 keyword indicating that the Git working tree has uncommitted changes.
-The modules are therefore installed in \code{/lib/modules/6.1.<x>-dirty/},
+The modules are therefore installed in {\tt /lib/modules/\workingkernel.<x>-dirty/},
 and the version of the running Linux kernel must match this.
 
 After rebooting, try to load the module that we need:
@@ -540,7 +540,7 @@ You can also see that a new USB device driver in
 USB devices are bound to this driver.
 
 You can check that \code{/proc/asound} now exists (thanks to loading
-modules for the ALSA, the Linux sound subsystem), and that one sound
+modules for ALSA, the Linux sound subsystem), and that one sound
 card is available:
 
 \begin{bashinput}
@@ -737,7 +737,7 @@ Let's create the branch and the patch now:
 
 \begin{bashinput}
 git checkout -b bootlin-labs
-git add arch/arm/boot/dts/stm32mp157a-dk1-custom.dts
+git add arch/arm/boot/dts/st/stm32mp157a-dk1-custom.dts
 git commit -as -m "Custom DTS for Bootlin lab"
 \end{bashinput}
 

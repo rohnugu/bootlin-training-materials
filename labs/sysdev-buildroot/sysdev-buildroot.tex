@@ -31,7 +31,7 @@ git clone https://git.buildroot.net/buildroot
 cd buildroot
 \end{bashinput}
 
-Now checkout the tag corresponding to the latest 2023.02.<n> release (Long
+Now checkout the tag corresponding to the latest 2024.02.<n> release (Long
 Term Support), which we have tested for this lab.
 
 Several subdirectories or files are visible, the most important ones
@@ -155,8 +155,8 @@ button whenever you need more details about a given option:
       \code{/home/<user>/x-tools/arm-training-linux-musleabihf}
     }
     (replace \code{<user>} by your actual user name)
-  \item \code{External toolchain gcc version}: \code{12.x}
-  \item \code{External toolchain kernel headers series}: \ifdefstring{\labboard}{beagleplay}{\texttt{6.1 or later}}{\texttt{\workingkernel.x or later}}
+  \item \code{External toolchain gcc version}: \code{13.x}
+  \item \code{External toolchain kernel headers series}: \code{6.6.x or later}
   \item \code{External toolchain C library}: \code{musl (experimental)}
   \item We must tell Buildroot about our toolchain configuration, so
     select \code{Toolchain has SSP support?} and
@@ -166,19 +166,16 @@ button whenever you need more details about a given option:
 \item \code{Kernel}
   \begin{itemize}
   \item Enable \code{Linux Kernel}
-  \if\defstring{\labboard}{beagleplay}
   \item Set \code{Kernel version} to \code{Custom version}
-  \item Set \code{Kernel version} to \code{6.6.20}
-  \else
-  \item Set \code{Kernel version} to \code{Latest version (6.1)}
-  \fi
+  \item Set \code{Kernel version} to your kernel version. You can use \code{make kernelversion} to
+  get it from the Linux kernel source tree.
   \item Set \code{Custom kernel patches} to \code{board/bootlin/training/0001-Custom-DTS-for-Bootlin-lab.patch}
   \item Set \code{Kernel configuration} to \code{Using a custom (def)config file})
   \item Set \code{Configuration file path} to \code{board/bootlin/training/linux.config}
   \item Select \code{Build a Device Tree Blob (DTB)}
   \item Set \code{In-tree Device Tree Source file names} to
-        \ifdefstring{\labboard}{stm32mp1}{\code{stm32mp157a-dk1-custom}}{}
-        \ifdefstring{\labboard}{beaglebone}{\code{am335x-boneblack-custom}}{}
+        \ifdefstring{\labboard}{stm32mp1}{\code{st/stm32mp157a-dk1-custom}}{}
+        \ifdefstring{\labboard}{beaglebone}{\code{ti/omap/am335x-boneblack-custom}}{}
         \ifdefstring{\labboard}{beagleplay}{\code{ti/k3-am625-beagleplay-custom}}{}
   \ifdefstring{\labboard}{beagleplay}{\item Set \code{Kernel Binary format} to \code{Image.gz}}{}
 \end{itemize}
@@ -539,7 +536,7 @@ let's commit them into a branch:
 
 \begin{bashinput}
 git checkout -b bootlin-labs
-git add board/bootlin/ package/nunchuk-driver/
+git add board/bootlin/ package/nunchuk-driver/ package/Config.in
 git commit -as -m "Bootlin lab changes"
 \end{bashinput}
 

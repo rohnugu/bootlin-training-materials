@@ -136,7 +136,7 @@ So, apply this configuration, and then run \code{make menuconfig}.
 }{}
 \ifdefstring{\labboard}{beagleplay}{
 \item In the \code{Platform Selection} menu, remove support for all the SoCs except
-the for Texas Instruments Inc. K3 multicore SoC architecture.
+for the Texas Instruments Inc. K3 multicore SoC architecture.
 \item Disable \kconfig{CONFIG_DRM}, which will skip support for many display
 controller and GPU drivers.
 }{}
@@ -246,5 +246,12 @@ reset. Reset the board, and customize \code{bootcmd}:
 => setenv bootcmd 'tftp %\zimageboardaddr\ \ifdefstring{\labboard}{beagleplay}{Image.gz}{zImage}; tftp \dtbboardaddr\ {\dtname}.dtb; \ifdefstring{\labboard}{beagleplay}{booti}{bootz} \zimageboardaddr\ - \dtbboardaddr'%
 => saveenv
 \end{ubootinput}
+
+\ifdefstring{\labboard}{beaglebone}
+{{\bf Known issue}: with at least U-Boot 2023.04 and 2024.04 and with
+USB networking, there is an issue running two \code{tftp} commands in a
+row in \code{bootcmd}. To work around this issue before we get a chance
+to fix it upstream, insert \code{sleep 0.1} between the two \code{tftp}
+commands and everything will work as expected.}{}
 
 Restart the board to make sure that booting the kernel is now automated.

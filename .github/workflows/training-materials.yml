@@ -15,7 +15,6 @@ jobs:
             embedded-linux-fr-agenda.pdf
             embedded-linux-online-agenda.pdf
             embedded-linux-online-fr-agenda.pdf
-            embedded-linux-qemu-agenda.pdf
             embedded-linux-labs.tar.xz
             embedded-linux-qemu-labs.tar.xz
   linux-kernel:
@@ -27,11 +26,14 @@ jobs:
           args: >
             full-linux-kernel-slides.pdf
             full-linux-kernel-labs.pdf
+            full-linux-kernel-beagleplay-slides.pdf
+            full-embedded-linux-beagleplay-labs.pdf
             linux-kernel-agenda.pdf
             linux-kernel-fr-agenda.pdf
             linux-kernel-online-agenda.pdf
             linux-kernel-online-fr-agenda.pdf
             linux-kernel-labs.tar.xz
+            linux-kernel-beagleplay-labs.tar.xz
   buildroot:
     runs-on: ubuntu-20.04
     steps:
@@ -58,18 +60,17 @@ jobs:
           args: >
             full-yocto-slides.pdf
             full-yocto-stm32-slides.pdf
+            full-yocto-beagleplay-slides.pdf
             full-yocto-labs.pdf
             full-yocto-stm32-labs.pdf
+            full-yocto-beagleplay-labs.pdf
             yocto-agenda.pdf
             yocto-fr-agenda.pdf
             yocto-online-agenda.pdf
             yocto-online-fr-agenda.pdf
-            yocto-stm32-agenda.pdf
-            yocto-stm32-fr-agenda.pdf
-            yocto-stm32-online-agenda.pdf
-            yocto-stm32-online-fr-agenda.pdf
             yocto-labs.tar.xz
             yocto-stm32-labs.tar.xz
+            yocto-beagleplay-labs.tar.xz
   boot-time:
     runs-on: ubuntu-20.04
     steps:

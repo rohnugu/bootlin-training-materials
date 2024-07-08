@@ -164,7 +164,7 @@ interface. First, let's enable it:
 \end{bashinput}
 
 If indeed the pin is still available, this should create a new
-{\tt gpio\gpionum} file should appear in \code{/sys/class/gpio}.
+{\tt gpio\gpionum} file in \code{/sys/class/gpio}.
 
 We can now configure this pin as input:
 
@@ -266,8 +266,8 @@ As shown on the earlier picture the BeaglePlay has 3 I2C
 busses available through different connectors:
 \begin{itemize}
 \item I2C3: available on the mikroBUS connector
-\item I2C1: available on the Groove connector
-\item I2C2: available on the Qwic connector
+\item I2C1: available on the Grove connector
+\item I2C2: available on the Qwiic connector
 \end{itemize}
 
 The AM62x SoC has 3 others I2C controllers but are not used on
@@ -330,7 +330,7 @@ accessible.
 
 However because this I2C controller is already enabled, we will
 first play with I2C4 (WKUP\_I2C0 in datasheet) and demonstrate
-how to enable it, even we don't use I2C4 in the rest of the labs.
+how to enable it, even if we won't use I2C4 in the rest of the labs.
 
 \subsection{Customizing the Device Tree}
 
@@ -392,7 +392,7 @@ as in the datasheet (\code{0x2B200000}):
 Now, let's use \code{i2cdetect}'s capability to probe a bus for devices.
 Let's start by the bus associated to \code{i2c-0}:
 
-\begin{bashinput}
+\begin{verbatim}
 # i2cdetect -r 0
 i2cdetect: WARNING! This program can confuse your I2C bus
 Continue? [y/N] y
@@ -405,7 +405,7 @@ Continue? [y/N] y
 50: 50 -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 60: -- -- -- -- -- -- -- -- 68 -- -- -- -- -- -- --
 70: -- -- -- -- -- -- -- --
-\end{bashinput}
+\end{verbatim}
 
 We can see three devices on this internal bus:
 \begin{itemize}
@@ -427,7 +427,7 @@ Device Tree and reboot.
 
 You should now be able to probe your bus:
 
-\begin{bashinput}
+\begin{verbatim}
 # i2cdetect -r 4
 i2cdetect: WARNING! This program can confuse your I2C bus
 Continue? [y/N] y
@@ -440,7 +440,7 @@ Continue? [y/N] y
 50: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 60: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 70: -- -- -- -- -- -- -- --
-\end{bashinput}
+\end{verbatim}
 
 Now we have demonstrated how to enable an I2C bus, it's time to
 use the I2C3 bus, which will be connected to our Nunchuk device.
@@ -468,7 +468,7 @@ to the \busname\ bus on the board, using breadboard wires:
 If you didn't do any mistake, your new device should be detected at
 address \code{0x52}:
 
-\begin{bashinput}
+\begin{verbatim}
 # i2cdetect -r 3
 i2cdetect: WARNING! This program can confuse your I2C bus
 Continue? [y/N] y
@@ -481,7 +481,7 @@ Continue? [y/N] y
 50: -- -- 52 -- -- -- -- -- -- -- -- -- -- -- -- --
 60: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 70: -- -- -- -- -- -- -- --
-\end{bashinput}
+\end{verbatim}
 
 We will later compile an out-of-tree kernel module to support this device.
 
@@ -497,6 +497,10 @@ Before plugging the device, look at the output of \code{lsusb}:
 # lsusb
 Bus 001 Device 001: ID 1d6b:0002
 \end{bashinput}
+
+{\bf Known issue:} if you don't get any output from \code{lsusb},
+you may need to remove the power supply and power on the board
+again.
 
 Now, when you plug the USB headset, a number of messages should appear
 on the console, and running \code{lsusb} again should show an
@@ -580,7 +584,7 @@ You can also see that a new USB device driver in
 USB devices are bound to this driver.
 
 You can check that \code{/proc/asound} now exists (thanks to loading
-modules for the ALSA, the Linux sound subsystem), and that one sound
+modules for ALSA, the Linux sound subsystem), and that one sound
 card is available:
 
 \begin{bashinput}
