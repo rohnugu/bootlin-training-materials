@@ -14,13 +14,17 @@ After this lab, you will be able to:
 \end{itemize}
 
 \section{Add input event interface support to the kernel}
-
-For this lab, you need to rebuild your kernel with static input
-event interface (\kconfig{CONFIG_INPUT_EVDEV}) support. With the default
-configuration, this feature is available as a module, which is less
-convenient.
+\ifdefstring{\labboard}{beagleplay}{
+This lab requires static input event interface support (\kconfig{CONFIG_INPUT_EVDEV})
+to be enabled in your kernel configuration, which is the default for the BeaglePlay.
+You can therefore continue to the next step.
+}{
+For this lab, you'll need to rebuild your kernel with static input event interface
+(\kconfig{CONFIG_INPUT_EVDEV}) support. With the default configuration, this
+feature is available as a module, which is less convenient.
 
 Update and reboot your kernel.
+}
 
 \section{Register an input interface}
 
@@ -203,7 +207,8 @@ evtest
 The application will show you all the available input devices, and will let
 you choose the one you are interested in (make sure you type a choice,
 \code{0} by default, and do not just type \code{[Enter]}). You can also
-type \code{evtest /dev/input/event0} right away.
+type \code{evtest /dev/input/event0} right away. On some boards, the correct
+event device will be \code{event1}.
 
 Press the various buttons and see that the corresponding events are
 reported by \code{evtest}.
@@ -237,7 +242,7 @@ so you will need to log to your system through \code{ssh} in an
 ordinary terminal:
 
 \begin{verbatim}
-ssh root@192.168.0.100
+ssh root@192.168.1.100
 \end{verbatim}
 
 The password for the {\em root} user is \code{root}.

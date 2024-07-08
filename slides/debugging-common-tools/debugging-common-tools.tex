@@ -331,7 +331,7 @@ MiB Swap:  15259.0 total,  15238.7 free,     20.2 used.   7742.3 avail Mem
   \end{itemize}
   \begin{block}{}
     \begin{minted}[fontsize=\scriptsize]{console}
-$ mpstat -P ALL 
+$ mpstat -P ALL
 Linux 6.0.0-1-amd64 (fixe)      19/10/2022      _x86_64_        (4 CPU)
 
 17:02:50     CPU    %usr   %nice    %sys %iowait    %irq   %soft  %steal  %guest  %gnice   %idle
@@ -367,7 +367,7 @@ Swap:           14Gi        20Mi        14Gi
   \end{block}
   \begin{itemize}
     \item {\em A small \code{free} value does not mean that your system suffers
-    from memory depletion ! Linux considers any unused memory as "wasted" so
+    from memory depletion! Linux considers any unused memory as "wasted" so
     it uses it for buffers and caches to optimize performance. See also
     \code{drop_caches} from \manpage{proc}{5} to observe buffers/cache
     impact on free/available memory}
@@ -458,7 +458,9 @@ sdb      104,42     274,55    2126,64       0,00  1280853  9921488        0
     \begin{itemize}
     \item Needs \kconfigval{CONFIG_TASKSTATS}{y},
           \kconfigval{CONFIG_TASK_DELAY_ACCT}{y} and
-          \kconfigval{CONFIG_TASK_IO_ACCOUNTING}{y} to be enabled in the kernel.
+          \kconfigval{CONFIG_TASK_IO_ACCOUNTING}{y} to be enabled in the
+          kernel.
+    \item Also needs to be enabled at runtime: \code{sysctl -w kernel.task_delayacct=1}
     \end{itemize}
   \end{itemize}
   \begin{block}{}
@@ -466,7 +468,7 @@ sdb      104,42     274,55    2126,64       0,00  1280853  9921488        0
 # iotop
 Total DISK READ:        20.61 K/s | Total DISK WRITE:        51.52 K/s
 Current DISK READ:      20.61 K/s | Current DISK WRITE:      24.04 K/s
-    TID  PRIO  USER     DISK READ DISK WRITE>    COMMAND                                                                                                                                                                                                                        
+    TID  PRIO  USER     DISK READ DISK WRITE>    COMMAND
     2629 be/4 cleger     20.61 K/s   44.65 K/s firefox-esr [Cache2 I/O]
     322 be/3 root        0.00 B/s    3.43 K/s [jbd2/nvme0n1p1-8]
   39055 be/4 cleger      0.00 B/s    3.43 K/s firefox-esr [DOMCacheThread]
@@ -489,3 +491,138 @@ Current DISK READ:      20.61 K/s | Current DISK WRITE:      24.04 K/s
     \item Monitor resources
   \end{itemize}
 }
+
+\subsection{Networking observability tools}
+
+\begin{frame}{ss}
+  \begin{itemize}
+  \item {\em ss} shows the status of network sockets
+    \begin{itemize}
+    \item IPv4 and IPv6, UDP, TCP, ICMP and UNIX domain sockets
+    \end{itemize}
+  \item Replaces {\em netstat}, now obsolete
+  \item Gets info from \code{/proc/net}
+  \item Usage:\\
+    \code{ss} by default shows connected sockets\\
+    \code{ss -l} shows listening sockets\\
+    \code{ss -a} shows both listening and connected sockets\\
+    \code{ss -4/-6/-x} shows only IPv4, IPv6, or UNIX sockets\\
+    \code{ss -t/-u} shows only TCP or UDP sockets\\
+    \code{ss -p} shows process using each socket\\
+    \code{ss -n} shows numeric addresses\\
+    \code{ss -s} shows a summary of existing sockets
+    \item See
+      \href{https://www.man7.org/linux/man-pages/man8/ss.8.html}{the ss
+        manpage} for all the options
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{ss example output}
+    \begin{block}{}
+      \begin{minted}[fontsize=\scriptsize]{console}
+# ss
+Netid State  Recv-Q Send-Q                Local Address:Port            Peer Address:Port  Process
+u_dgr ESTAB  0      0                                 * 304840                     * 26673
+u_str ESTAB  0      0       /run/dbus/system_bus_socket 42871                      * 26100
+icmp6 UNCONN 0      0                                 *:ipv6-icmp                  *:*
+udp   ESTAB  0      0          192.168.10.115%wlp0s20f3:bootpc         192.168.10.88:bootps
+tcp   ESTAB  0      136                      172.16.0.1:41376           172.16.11.42:ssh
+tcp   ESTAB  0      273                    192.168.1.77:55494          87.98.181.233:https
+tcp   ESTAB  0      0                   [2a02:...:dbdc]:38466     [2001:...:9]:imap2
+...
+#
+      \end{minted}
+    \end{block}
+\end{frame}
+
+\begin{frame}{iftop}
+  \begin{itemize}
+  \item {\em iftop} displays bandwidth usage on an interface by remote host
+  \item Visualizes bandwidth using histograms
+  \item \code{iftop -i eth0}
+  \begin{center}
+    \includegraphics[width=0.9\textwidth]{slides/debugging-common-tools/iftop.png}
+  \end{center}
+  \item The output can be customized interactively
+    \item See \href{https://linux.die.net/man/8/iftop}{the iftop manpage}
+      for details
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{tcpdump}
+  \begin{itemize}
+  \item {\em tcpdump} allows to capture network traffic and decode many
+    protocols
+  \item \code{tcpdump -i eth0}
+  \item based on the {\em libpcap} library for packet capture
+  \item It can also store captured packets to a file and read them back
+    \begin{itemize}
+    \item In the {\em pcap} format or the newer {\em pcapng} format
+    \item \code{tcpdump -i eth0 -w capture.pcap}
+    \item \code{tcpdump -r capture.pcap}
+    \end{itemize}
+  \item A capture filter can be used to avoid capturing irrelevant packets
+    \begin{itemize}
+    \item \code{tcpdump -i eth0 tcp and not port 22}
+    \end{itemize}
+  \item \url{https://www.tcpdump.org/}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{tcpdump example output}
+    \begin{block}{}
+      \begin{minted}[fontsize=\scriptsize]{console}
+# tcpdump -i eth0
+18:41:22.913058 IP localhost.localnet.40764 > srv.localnet: 14324+ AAAA? bootlin.com. (29)
+18:41:22.913797 IP srv.localnet > localhost.localnet.40764: 14324 0/1/0 (89)
+18:41:22.914268 IP localhost.localnet > bootlin.com: ICMP echo request, id 3, seq 1, length 64
+18:41:23.933063 IP localhost.localnet > bootlin.com: ICMP echo request, id 3, seq 2, length 64
+18:41:24.957027 IP localhost.localnet > bootlin.com: ICMP echo request, id 3, seq 3, length 64
+18:41:24.996415 IP bootlin.com > localhost.localnet: ICMP echo reply, id 3, seq 3, length 64
+^C
+# tcpdump -i eth0 tcp and not port 22
+... IP B.https > A.38910: Flags [.], ack 469, win 501, options [...], length 0
+... IP B.https > A.38910: Flags [P.], seq 2602:2857, ack 469, win 501, options [...], length 255
+... IP A.38910 > B.https: Flags [.], ack 2857, win 501, options [...], length 0
+... IP A.38910 > B.https: Flags [P.], seq 469:621, ack 2857, win 501, options [...], length 152
+... IP B.https > A.38910: Flags [.], ack 621, win 501, options [...], length 0
+... IP B.https > A.38910: Flags [P.], seq 2857:3825, ack 621, win 501, options [...], length 968
+... IP A.38910 > B.https: Flags [P.], seq 621:779, ack 3825, win 501, options [...], length 158
+^C
+#
+      \end{minted}
+    \end{block}
+\end{frame}
+
+\begin{frame}{Wireshark}
+  \begin{itemize}
+  \item Similar to tcpdump, but with a GUI
+  \item Also based on libpcap
+    \begin{itemize}
+    \item Can capture and use the same BPF capture filters
+    \item Can load and save the same file formats
+      \begin{itemize}
+      \item Useful for embedded: capture on the target with tcpdump,
+        analyze on the host with Wireshark
+      \end{itemize}
+    \end{itemize}
+  \item Has {\em dissectors} to decode hundreds of protocols
+    \begin{itemize}
+    \item Each individual value from each packet is dissected into a
+      separate field
+    \item Fields are very fine-grained, at least for the most common
+      protocols
+    \end{itemize}
+  \item Has {\em display filters} that allow filtering {\em already
+    captured} packets
+    \begin{itemize}
+    \item Each dissected field is also a filter key
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Wireshark}
+  \begin{center}
+    \includegraphics[height=0.88\textheight]{slides/debugging-common-tools/wireshark.png}
+  \end{center}
+\end{frame}

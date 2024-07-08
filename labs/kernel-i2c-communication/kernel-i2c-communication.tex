@@ -14,11 +14,11 @@ After this lab, you will be able to:
 
 \section{Setup}
 
-Stay in the \code{~/linux-kernel-labs/src/linux} directory for kernel and DTB
-compiling (stay in the \code{bbb-custom} branch).
+Stay in the \code{~/__SESSION_NAME__-labs/src/linux} directory for kernel and DTB
+compiling (stay in the \ifdefstring{\labboard}{beagleplay}{\code{beagleplay-custom}}{bbb-custom} branch).
 
 In a new terminal, go to
-\code{~/linux-kernel-labs/modules/nfsroot/root/nunchuk/}.  This directory
+\code{~/__SESSION_NAME__-labs/modules/nfsroot/root/nunchuk/}.  This directory
 contains a Makefile and an almost empty \code{nunchuk.c} file.
 
 \section{Exploring /dev}
@@ -169,6 +169,11 @@ In the probe routine (run every time a matching device is found):
       using. This could reveal communication issues.  Using Elixir, find
       examples of how to handle failures properly using the same
       function.
+
+      (Optional) If you defined a \code{nintendo,alternate-init}
+      property, you may want to check it's presence in the device tree
+      using \kfunc{device_property_read_bool}, and derive the right
+      initialization bytes from it.
 
 \item Let the CPU wait for 1 ms by using the \kfunc{udelay} routine.
       Let's use Elixir again to find the right C headers to include...

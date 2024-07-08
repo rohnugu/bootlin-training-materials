@@ -377,13 +377,14 @@ Performance counter stats for 'cat /etc/fstab':
   \end{itemize}
   \begin{block}{}
     \begin{minted}[fontsize=\small]{console}
-$ valgrind --tool=cachegrind ./my_program
+$ valgrind --tool=cachegrind --cache-sim=yes ./my_program
     \end{minted}
   \end{block}
   \begin{itemize}
+    \item It generates a \code{cachegrind.out.<pid>} file containing the measures
     \item \code{cg_annotate} is a CLI tool used to visualize cachegrind
           simulation results.
-    \item Two simulation results can be diffed using the \code{cg_diff} tool.
+    \item It also has a \code{--diff} option to allow comparing two measures files
   \end{itemize}
 \end{frame}
 
